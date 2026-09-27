@@ -15,7 +15,7 @@ import { TMDBSearchPersonResult } from "@/types/person-types";
 import { TMDBMultiSearchResult } from "@/types/search-types";
 import { TradingTVShow } from "@/types/tv-shows-type";
 import { useFocusEffect, useNavigation, useRouter } from "expo-router";
-import { Search } from "lucide-react-native";
+import { Funnel, Search } from "lucide-react-native";
 import {
   useCallback,
   useEffect,
@@ -71,8 +71,12 @@ export default function DiscoverScreen() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      rightButton: {
+      leftButton: {
         icon: Search,
+        onPress: () => setIsSearchVisible(true),
+      },
+      rightButton: {
+        icon: Funnel,
         onPress: () => setIsSearchVisible(true),
       },
     });

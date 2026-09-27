@@ -1,11 +1,12 @@
 import { TradingMovie } from "./movie-types";
+import { TmdbGender, TmdbKnownForDepartment } from "./person-full-details";
 import { TradingTVShow } from "./tv-shows-type";
 
 export type TMDBPersonSummary = {
   adult: boolean;
-  gender: number; // 0 = not specified, 1 = female, 2 = male, 3 = non-binary
+  gender: TmdbGender;
   id: number;
-  known_for_department: string;
+  known_for_department: TmdbKnownForDepartment;
   name: string;
   original_name: string;
   popularity: number;

@@ -2,6 +2,7 @@ import Loading from "@/components/common/loading/Loading";
 import { Collapsible } from "@/components/ui/collapsible";
 import { useGetMovieSimilar } from "@/hooks/api/movie/useGetMovieSimilar";
 import { useGetTvShowSimilar } from "@/hooks/api/tv-show/useGetTvShowSimilar";
+import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView } from "react-native";
 import VerticalMovieCard from "../vertical-movie-card/VerticalMovieCard";
@@ -12,7 +13,9 @@ type Props = {
 };
 
 const SimilarTitles = ({ id, type }: Props) => {
+  const basePath = usePathname().split("/")[1] as "ratings" | "discover";
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const movies = useGetMovieSimilar(id, isOpen && type === "movie");
   const series = useGetTvShowSimilar(id, isOpen && type === "tv");
@@ -43,7 +46,16 @@ const SimilarTitles = ({ id, type }: Props) => {
           if (!releaseDate) return null;
 
           return (
-            <VerticalMovieCard key={item.id} item={item} onPress={() => {}} />
+            <VerticalMovieCard
+              key={item.id}
+              item={item}
+              onPress={() =>
+                router.navigate({
+                  pathname: `/${basePath}/${type}/[id]`,
+                  params: { id: item.id },
+                })
+              }
+            />
           );
         })}
       </ScrollView>

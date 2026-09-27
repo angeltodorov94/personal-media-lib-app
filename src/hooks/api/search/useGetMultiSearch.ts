@@ -26,7 +26,7 @@ export function useGetMultiSearch(search: string) {
         : undefined;
     },
     // Optional tuning:
-    staleTime: 60_000,
+    staleTime: 60000,
     // maxPages: 5, // cap how many pages are kept in memory
     enabled: search.trim().length > 0,
   });

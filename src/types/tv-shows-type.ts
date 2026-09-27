@@ -24,6 +24,7 @@ import {
   ProductionCountry,
   SpokenLanguage,
 } from "./common.type";
+import { TmdbGender } from "./person-full-details";
 import { AggregateCastMember, AggregateCrewMember } from "./person-types";
 
 /* -------------------------------------------------------------------------- */
@@ -35,8 +36,7 @@ export interface CreatedBy {
   credit_id: string;
   name: string;
   original_name: string;
-  /** 0 = not specified, 1 = female, 2 = male, 3 = non-binary */
-  gender: number;
+  gender: TmdbGender;
   profile_path: string | null;
 }
 

@@ -9,8 +9,8 @@ import { useWindowDimensions } from "react-native";
 
 type Props = PropsWithChildren & {
   img: string | null;
-  vote_average: number;
-  account_states: AccountStates;
+  vote_average?: number;
+  account_states?: AccountStates;
 };
 
 const MainSection = ({
@@ -58,35 +58,8 @@ const MainSection = ({
         }}
       >
         <View>{children}</View>
-        <View style={{ gap: 10 }}>
-          <View style={{ gap: 4 }}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-              }}
-            >
-              <Text
-                // variant="caption"
-                style={{ fontSize: 14, fontWeight: "600" }}
-              >
-                User Score
-              </Text>
-              <Text
-                // variant="caption"
-                style={{ fontSize: 14, fontWeight: "600" }}
-              >
-                {Math.round(vote_average * 10)}%
-              </Text>
-            </View>
-            <Progress
-              height={12}
-              value={Math.round(vote_average * 10)}
-              style={{ backgroundColor: barBackgroundColor }}
-              barColor={"info"}
-            />
-          </View>
-          {account_states.rated && (
+        {vote_average && (
+          <View style={{ gap: 10 }}>
             <View style={{ gap: 4 }}>
               <View
                 style={{
@@ -94,28 +67,45 @@ const MainSection = ({
                   justifyContent: "space-between",
                 }}
               >
-                <Text
-                  // variant="caption"
-                  style={{ fontSize: 14, fontWeight: "600" }}
-                >
-                  My Score
+                <Text style={{ fontSize: 14, fontWeight: "600" }}>
+                  User Score
                 </Text>
-                <Text
-                  // variant="caption"
-                  style={{ fontSize: 14, fontWeight: "600" }}
-                >
-                  {account_states.rated.value * 10}%
+                <Text style={{ fontSize: 14, fontWeight: "600" }}>
+                  {Math.round(vote_average * 10)}%
                 </Text>
               </View>
               <Progress
                 height={12}
-                value={account_states.rated.value * 10}
+                value={Math.round(vote_average * 10)}
                 style={{ backgroundColor: barBackgroundColor }}
-                barColor={getBarColor(account_states.rated.value * 10)}
+                barColor={"info"}
               />
             </View>
-          )}
-        </View>
+            {account_states && account_states.rated && (
+              <View style={{ gap: 4 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={{ fontSize: 14, fontWeight: "600" }}>
+                    My Score
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: "600" }}>
+                    {account_states.rated.value * 10}%
+                  </Text>
+                </View>
+                <Progress
+                  height={12}
+                  value={account_states.rated.value * 10}
+                  style={{ backgroundColor: barBackgroundColor }}
+                  barColor={getBarColor(account_states.rated.value * 10)}
+                />
+              </View>
+            )}
+          </View>
+        )}
       </View>
     </View>
   );

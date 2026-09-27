@@ -2,6 +2,7 @@ import Loading from "@/components/common/loading/Loading";
 import { Collapsible } from "@/components/ui/collapsible";
 import { useGetMovieRecommendations } from "@/hooks/api/movie/useGetMovieRecommendations";
 import { useGetTvShowRecommendations } from "@/hooks/api/tv-show/useGetTvShowRecommendations";
+import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import VerticalMovieCard from "../vertical-movie-card/VerticalMovieCard";
@@ -12,7 +13,9 @@ type Props = {
 };
 
 const RecommendationsTitles = ({ id, type }: Props) => {
+  const basePath = usePathname().split("/")[1] as "ratings" | "discover";
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const movies = useGetMovieRecommendations(id, isOpen && type === "movie");
   const series = useGetTvShowRecommendations(id, isOpen && type === "tv");
@@ -37,7 +40,16 @@ const RecommendationsTitles = ({ id, type }: Props) => {
         }}
       >
         {data?.results.map((item) => (
-          <VerticalMovieCard key={item.id} item={item} onPress={() => {}} />
+          <VerticalMovieCard
+            key={item.id}
+            item={item}
+            onPress={() =>
+              router.navigate({
+                pathname: `/${basePath}/${type}/[id]`,
+                params: { id: item.id },
+              })
+            }
+          />
         ))}
       </ScrollView>
     );

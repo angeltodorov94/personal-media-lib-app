@@ -15,7 +15,7 @@ import { View } from "@/components/ui/view";
 import { useGetTvShowFullDetails } from "@/hooks/api/tv-show/useGetTvShowFullDetails";
 import { getFlagEmoji } from "@/lib/getFlagEmoji";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { Dot } from "lucide-react-native";
+import { Dot, Star, StarPlus } from "lucide-react-native";
 import { useLayoutEffect } from "react";
 
 function TVShowDetails() {
@@ -28,10 +28,10 @@ function TVShowDetails() {
     if (!data) return;
 
     navigation.setOptions({
-      // rightButton: {
-      //   icon: Search,
-      //   onPress: () => {},
-      // },
+      rightButton: {
+        icon: data.account_states.rated ? Star : StarPlus,
+        onPress: () => {},
+      },
     });
   }, [navigation, data]);
 

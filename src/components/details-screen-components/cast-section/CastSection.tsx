@@ -1,15 +1,15 @@
 import { Collapsible } from "@/components/ui/collapsible";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
-import { View } from "@/components/ui/view";
 import {
   AggregateCastMember,
   CastMember,
   CrewMember,
 } from "@/types/person-types";
 import { CreatedBy } from "@/types/tv-shows-type";
+import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native";
 
 type Props = {
   data: CastMember[] | CrewMember[] | AggregateCastMember[] | CreatedBy[];
@@ -17,7 +17,9 @@ type Props = {
 };
 
 const CastSection = ({ data, title }: Props) => {
+  const basePath = usePathname().split("/")[1] as "ratings" | "discover";
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const renderData = () => {
     return data.map((item) => {
@@ -39,6 +41,12 @@ const CastSection = ({ data, title }: Props) => {
           sub={sub}
           img={item.profile_path!}
           episodes={episodes}
+          onPress={() =>
+            router.navigate({
+              pathname: `/${basePath}/person/[id]`,
+              params: { id: item.id },
+            })
+          }
         />
       );
     });
@@ -70,13 +78,15 @@ const Component = ({
   sub,
   img,
   episodes,
+  onPress,
 }: {
   main: string;
   sub: string;
   img: string;
   episodes: number | null;
+  onPress: () => void;
 }) => (
-  <View style={{ width: 128 }}>
+  <TouchableOpacity style={{ width: 128 }} onPress={onPress}>
     <Image
       source={{
         uri: `https://image.tmdb.org/t/p/h632${img}`,
@@ -87,14 +97,18 @@ const Component = ({
       variant="circle"
       contentPosition="center"
     />
-    <Text numberOfLines={2} style={{ fontSize: 16 }}>
+    <Text numberOfLines={2} style={{ fontSize: 16, textAlign: "center" }}>
       {main}
     </Text>
-    <Text variant="caption" numberOfLines={2} style={{ fontSize: 14 }}>
+    <Text
+      variant="caption"
+      numberOfLines={2}
+      style={{ fontSize: 14, textAlign: "center" }}
+    >
       {sub}
     </Text>
-    <Text variant="caption" style={{ fontSize: 14 }}>
+    <Text variant="caption" style={{ fontSize: 14, textAlign: "center" }}>
       {episodes}
     </Text>
-  </View>
+  </TouchableOpacity>
 );

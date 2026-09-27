@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { View } from "@/components/ui/view";
+import { openImdbTitle } from "@/lib/openImdb";
 
 type Props = {
   imdb: string | null;
@@ -23,9 +24,9 @@ const ExtraSection = ({ imdb, collectionID }: Props) => {
       )}
       {imdb && (
         <Button
-          textStyle={{ fontSize: 16, color: "black" }}
+          textStyle={{ fontSize: 16, color: "black", fontWeight: "bold" }}
           style={{ flex: 1, backgroundColor: "#f5c518" }}
-          onPress={() => {}}
+          onPress={() => openImdbTitle(imdb)}
         >
           IMDB Link
         </Button>

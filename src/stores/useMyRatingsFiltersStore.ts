@@ -4,11 +4,13 @@ import { create } from "zustand";
 interface MyRatingsFiltersState {
   isOpen: boolean;
   mediaType: MediaType;
+  // Discover page filters
 }
 
 export const useMyRatingsFiltersStore = create<MyRatingsFiltersState>(() => ({
   isOpen: false,
   mediaType: "movies",
+  //  Discover page filters
 }));
 
 export const setType = (mediaType: MediaType) =>
