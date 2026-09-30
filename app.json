@@ -14,7 +14,8 @@
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.achicha94.achoslibrarymobile"
     },
     "web": {
       "bundler": "metro",
@@ -35,6 +36,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "aa3a0d68-b925-4a81-a8f8-abfe93a644f9"
+      }
+    },
+    "owner": "achicha94"
   }
 }

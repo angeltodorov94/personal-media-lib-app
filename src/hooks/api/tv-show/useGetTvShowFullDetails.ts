@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { SESSION_TOKEN } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { TVSeriesDetailsWithExtras } from "@/types/tv";
 import { useQuery } from "@tanstack/react-query";
@@ -23,7 +24,7 @@ async function queryFn(id: string): Promise<TVSeriesDetailsWithExtras> {
     params: {
       append_to_response:
         "account_states,aggregate_credits,external_ids,keywords",
-      session_id: process.env.EXPO_PUBLIC_SESSION_TOKEN,
+      session_id: SESSION_TOKEN,
     },
   });
 

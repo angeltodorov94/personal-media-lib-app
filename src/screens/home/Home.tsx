@@ -1,3 +1,4 @@
+import Error from "@/components/common/error/Error";
 import Loading from "@/components/common/loading/Loading";
 import VerticalMediaCard from "@/components/details-screen-components/vertical-media-card/VerticalMediaCard";
 import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalScroll";
@@ -34,6 +35,10 @@ export default function HomeScreen() {
 
   if (moviesQ.isLoading || showsQ.isLoading) {
     return <Loading />;
+  }
+
+  if (moviesQ.isError || showsQ.isError) {
+    return <Error />;
   }
 
   return (

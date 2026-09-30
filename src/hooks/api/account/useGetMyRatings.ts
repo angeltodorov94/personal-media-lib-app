@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { ACCOUNT_ID } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { MediaType, SortType } from "@/types/common";
 import { RatedMediaResponse } from "@/types/rating";
@@ -10,7 +11,7 @@ async function queryFn(
   pageParam: number,
 ): Promise<RatedMediaResponse> {
   const { data } = await api.get<RatedMediaResponse>(
-    `account/${process.env.EXPO_PUBLIC_ACCOUNT_ID}/rated/${mediaType}`,
+    `account/${ACCOUNT_ID}/rated/${mediaType}`,
     {
       params: {
         sort_by: `created_at.${sort}`,

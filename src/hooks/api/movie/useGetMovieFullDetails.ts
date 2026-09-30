@@ -1,4 +1,5 @@
 import { api } from "@/lib/axios";
+import { SESSION_TOKEN } from "@/lib/constants";
 import { queryKeys } from "@/lib/queryKeys";
 import { MovieDetailsWithExtras } from "@/types/movie";
 import { useQuery } from "@tanstack/react-query";
@@ -29,7 +30,7 @@ async function queryFn(id: string): Promise<MovieDetailsWithExtras> {
   const { data } = await api.get<MovieDetailsWithExtras>(`movie/${id}`, {
     params: {
       append_to_response: "account_states,credits,keywords",
-      session_id: process.env.EXPO_PUBLIC_SESSION_TOKEN,
+      session_id: SESSION_TOKEN,
     },
   });
 
