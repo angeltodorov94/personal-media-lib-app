@@ -9,6 +9,7 @@ export default function TabStackLayout() {
         headerTransparent: true,
       }}
     >
+      <Stack.Screen name="index" />
       <Stack.Screen name="person/[id]" options={{ title: "Actor" }} />
       <Stack.Screen name="tv/[id]" options={{ title: "TV Show" }} />
       <Stack.Screen name="movie/[id]" options={{ title: "Movie" }} />

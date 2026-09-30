@@ -6,19 +6,27 @@ import ScrollViewPageLayout from "@/components/layouts/scrollview-page-layout/Sc
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { useGetTrendingMovies } from "@/hooks/api/trending/useGetTrendingMovies";
-import { useGetTrendingShows } from "@/hooks/api/trending/useGetTrendingShows";
+import axios from "axios";
 import { useNavigation, useRouter } from "expo-router";
 import { Search, Settings } from "lucide-react-native";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import SearchComponent from "./search-component/SearchComponent";
 
 export default function HomeScreen() {
   const [isSearchVisible, setIsSearchVisible] = useState(false);
-
+  console.log("here");
   const moviesQ = useGetTrendingMovies();
-  const showsQ = useGetTrendingShows();
+  // const showsQ = useGetTrendingShows();
   const navigation = useNavigation();
   const router = useRouter();
+
+  useEffect(() => {
+    const func = async () => {
+      console.log((await axios.get("https://dummyjson.com/test")).data);
+    };
+
+    func();
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -33,11 +41,11 @@ export default function HomeScreen() {
     });
   }, [navigation]);
 
-  if (moviesQ.isLoading || showsQ.isLoading) {
+  if (moviesQ.isLoading) {
     return <Loading />;
   }
 
-  if (moviesQ.isError || showsQ.isError) {
+  if (moviesQ.isError) {
     return <Error />;
   }
 
@@ -64,7 +72,7 @@ export default function HomeScreen() {
           </HorizontalScroll>
         </View>
       )}
-      {showsQ.data && (
+      {/* {showsQ.data && (
         <View>
           <Text variant="heading" style={{ marginLeft: 10 }}>
             Popular TV Shows
@@ -84,7 +92,7 @@ export default function HomeScreen() {
             ))}
           </HorizontalScroll>
         </View>
-      )}
+      )} */}
       <SearchComponent
         isVisible={isSearchVisible}
         onClose={() => setIsSearchVisible(false)}
