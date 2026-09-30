@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Collapsible } from "@/components/ui/collapsible";
 import { View } from "@/components/ui/view";
-import { Keyword } from "@/types/common.type";
+import { Keyword } from "@/types/common";
 import { useState } from "react";
 
 type Props = {

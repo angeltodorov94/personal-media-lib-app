@@ -16,7 +16,7 @@ import {
   setIsSortingPanelOpen,
   useSortingStore,
 } from "@/stores/useSortingStore";
-import { MovieSummary } from "@/types/movie-types";
+import { MovieSummary } from "@/types/movie";
 import { useNavigation, useRouter } from "expo-router";
 import { ArrowDownUp, FunnelPlus, FunnelX } from "lucide-react-native";
 import { useLayoutEffect } from "react";

@@ -1,13 +1,15 @@
 import { useToast } from "@/components/ui/toast";
 import { api } from "@/lib/axios";
-import { MutationResponse } from "@/types/common.type";
+import { getErrorMessage } from "@/lib/getErrorMessage";
+import { queryKeys } from "@/lib/queryKeys";
+import { MutationResponse } from "@/types/common";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 async function mutationFn(
   type: "movie" | "tv",
   id: number,
 ): Promise<MutationResponse> {
-  const { data } = await api.delete(`${type}/${id}/rating`);
+  const { data } = await api.delete<MutationResponse>(`${type}/${id}/rating`);
 
   return data;
 }
@@ -20,16 +22,16 @@ export function useDeleteRating(type: "movie" | "tv", id: number) {
     mutationFn: () => mutationFn(type, id),
     onSuccess: (res) => {
       qC.invalidateQueries({
-        queryKey: ["my-ratings"],
+        queryKey: queryKeys.myRatings,
       });
       qC.invalidateQueries({
-        queryKey: [type === "tv" ? "tv-show-details" : "movie-details", id],
+        queryKey: queryKeys.details(type, id),
       });
 
       success("Success!", res.status_message);
     },
-    onError: () => {
-      error("Error!", "Something went wrong!");
+    onError: (err) => {
+      error("Error!", getErrorMessage(err));
     },
   });
 }

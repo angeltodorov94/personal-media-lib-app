@@ -1,9 +1,11 @@
 import { api } from "@/lib/axios";
-import { GenreListResponse } from "@/types/common.type";
+import { GenreListResponse } from "@/types/common";
 import { useQuery } from "@tanstack/react-query";
 
 async function queryFn(type: "movie" | "tv"): Promise<GenreListResponse> {
-  const { data } = await api.get(`genre/${type}/list?language=en`);
+  const { data } = await api.get<GenreListResponse>(`genre/${type}/list`, {
+    params: { language: "en" },
+  });
 
   return data;
 }

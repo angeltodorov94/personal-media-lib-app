@@ -1,11 +1,14 @@
 import { api } from "@/lib/axios";
-import { TmdbPersonDetails } from "@/types/person-full-details";
+import { PersonDetails } from "@/types/person";
 import { useQuery } from "@tanstack/react-query";
 
-async function queryFn(id: string): Promise<TmdbPersonDetails> {
-  const { data } = await api.get(
-    `person/${id}?append_to_response=combined_credits&language=en-US'`,
-  );
+async function queryFn(id: string): Promise<PersonDetails> {
+  const { data } = await api.get<PersonDetails>(`person/${id}`, {
+    params: {
+      append_to_response: "combined_credits",
+      language: "en-US",
+    },
+  });
 
   return data;
 }

@@ -1,34 +1,38 @@
 /**
- * TypeScript types for The Movie Database (TMDB) API v3 — TV Series
+ * TMDB API v3 TV series types.
+ *
  * Endpoints covered:
  *  - GET /tv/{series_id}                    -> TVSeriesDetails
- *  - GET /tv/{series_id}/account_states      -> TVAccountStates
- *  - GET /tv/{series_id}/aggregate_credits   -> TVAggregateCredits
- *  - GET /tv/{series_id}/episode_groups      -> TVEpisodeGroupsResponse
- *  - GET /tv/{series_id}/keywords            -> TVKeywords
- *  - GET /tv/{series_id}/similar             -> TVSimilarResponse
- *  - GET /tv/{series_id}/recommendations     -> TVRecommendationsResponse
+ *  - GET /tv/{series_id}/aggregate_credits  -> TVAggregateCredits
+ *  - GET /tv/{series_id}/external_ids       -> TVSeriesExternalIds
+ *  - GET /tv/{series_id}/keywords           -> TVKeywords
+ *  - GET /tv/{series_id}/similar            -> TVListResponse
+ *  - GET /tv/{series_id}/recommendations    -> TVListResponse
+ *  - GET /discover/tv                       -> TVListResponse
+ *  - GET /account/{account_id}/rated/tv     -> RatedTVShowsResponse
+ *  - GET /trending/tv/{time_window}         -> TrendingTVShowsResponse
  *
  * Reference: https://developer.themoviedb.org/reference/tv-series-details
- *
- * Shared building blocks (Genre, ProductionCompany, ProductionCountry,
- * SpokenLanguage, PaginatedResponse) are reused from the movie types file.
  */
 
 import {
   AccountStates,
   Genre,
   Keyword,
+  MediaSummaryBase,
   PaginatedResponse,
   ProductionCompany,
   ProductionCountry,
   SpokenLanguage,
-} from "./common.type";
-import { TmdbGender } from "./person-full-details";
-import { AggregateCastMember, AggregateCrewMember } from "./person-types";
+} from "./common";
+import {
+  AggregateCastMember,
+  AggregateCrewMember,
+  Gender,
+} from "./person";
 
 /* -------------------------------------------------------------------------- */
-/*  Shared / building-block types                                             */
+/*  Building blocks                                                           */
 /* -------------------------------------------------------------------------- */
 
 export type CreatedBy = {
@@ -36,7 +40,7 @@ export type CreatedBy = {
   credit_id: string;
   name: string;
   original_name: string;
-  gender: TmdbGender;
+  gender: Gender;
   profile_path: string | null;
 };
 
@@ -76,25 +80,12 @@ export type SeasonSummary = {
   vote_average: number;
 };
 
-/**
- * Condensed TV shape returned in list-style endpoints
- * (similar, recommendations, search, discover, etc).
- */
-export type TVSummary = {
-  adult: boolean;
-  backdrop_path: string | null;
-  genre_ids: number[];
-  id: number;
-  origin_country: string[];
-  original_language: string;
-  original_name: string;
-  overview: string;
-  popularity: number;
-  poster_path: string | null;
+/** Condensed TV shape returned in list-style endpoints. */
+export type TVSummary = MediaSummaryBase & {
   first_air_date: string;
   name: string;
-  vote_average: number;
-  vote_count: number;
+  origin_country: string[];
+  original_name: string;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -151,7 +142,7 @@ export type TVSeriesDetails = {
 };
 
 /* -------------------------------------------------------------------------- */
-/*  GET /tv/{series_id}/aggregate_credits                                     */
+/*  Appended sub-resources                                                    */
 /* -------------------------------------------------------------------------- */
 
 export type TVAggregateCredits = {
@@ -160,11 +151,7 @@ export type TVAggregateCredits = {
   crew: AggregateCrewMember[];
 };
 
-/* -------------------------------------------------------------------------- */
-/*  GET /tv/{series_id}/external_ids                                     */
-/* -------------------------------------------------------------------------- */
-
-export type TMDbTVSeriesExternalIds = {
+export type TVSeriesExternalIds = {
   id: number;
   imdb_id: string | null;
   freebase_mid: string | null;
@@ -177,53 +164,37 @@ export type TMDbTVSeriesExternalIds = {
   twitter_id: string | null;
 };
 
-/* -------------------------------------------------------------------------- */
-/*  GET /tv/{series_id}/keywords                                              */
-/* -------------------------------------------------------------------------- */
-
 /** Note: unlike the movie endpoint, TV keywords are returned under `results`, not `keywords`. */
 export type TVKeywords = {
   id: number;
   results: Keyword[];
 };
 
-/* -------------------------------------------------------------------------- */
-/*  GET /tv/{series_id}/similar                                               */
-/*  GET /tv/{series_id}/recommendations                                       */
-/*  GET /discover/tv                                                          */
-/* -------------------------------------------------------------------------- */
-
-export type TVSimilarResponse = PaginatedResponse<TVSummary>;
-export type TVRecommendationsResponse = PaginatedResponse<TVSummary>;
-export type TVDiscoverResponse = PaginatedResponse<TVSummary>;
-
-/* -------------------------------------------------------------------------- */
-/*  GET /account/{account_id}/rated/tv                                    */
-/* -------------------------------------------------------------------------- */
-
-export type RatedTVShow = TVSummary & { rating: number };
-export type RatedTVShowsResponse = PaginatedResponse<RatedTVShow>;
-
-/* -------------------------------------------------------------------------- */
-/*  GET /trending/movie/{time_window}                                         */
-/* -------------------------------------------------------------------------- */
-
-export type TradingTVShow = TVSummary & { media_type: string };
-export type TradingTVShowsResponse = PaginatedResponse<TradingTVShow>;
-
 /**
- * Shape of the response when chaining details with account_states,
- * aggregate_credits, episode_groups and keywords via `append_to_response`.
- * Each appended endpoint's response is merged in as a top-level key, named
- * after the endpoint itself (its own `id` field is redundant but TMDB still
- * sends it).
+ * Response when chaining details with account_states, aggregate_credits,
+ * external_ids and keywords via `append_to_response`. Each appended
+ * endpoint's response is merged in as a top-level key named after the
+ * endpoint (its own `id` is redundant but TMDB still sends it).
  *
  * Example request:
- *   GET /tv/{series_id}?append_to_response=account_states,aggregate_credits,episode_groups,keywords
+ *   GET /tv/{series_id}?append_to_response=account_states,aggregate_credits,external_ids,keywords
  */
 export type TVSeriesDetailsWithExtras = TVSeriesDetails & {
   account_states: AccountStates;
   aggregate_credits: TVAggregateCredits;
-  external_ids: TMDbTVSeriesExternalIds;
+  external_ids: TVSeriesExternalIds;
   keywords: TVKeywords;
 };
+
+/* -------------------------------------------------------------------------- */
+/*  List responses                                                            */
+/* -------------------------------------------------------------------------- */
+
+/** /similar, /recommendations and /discover all share this shape. */
+export type TVListResponse = PaginatedResponse<TVSummary>;
+
+export type RatedTVShow = TVSummary & { rating: number };
+export type RatedTVShowsResponse = PaginatedResponse<RatedTVShow>;
+
+export type TrendingTVShow = TVSummary & { media_type: "tv" };
+export type TrendingTVShowsResponse = PaginatedResponse<TrendingTVShow>;

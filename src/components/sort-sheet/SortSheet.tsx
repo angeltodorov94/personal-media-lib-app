@@ -9,7 +9,7 @@ import {
   SortState,
   useSortingStore,
 } from "@/stores/useSortingStore";
-import { SortType } from "@/types/common.type";
+import { SortType } from "@/types/common";
 import { useEffect, useState } from "react";
 import Loading from "../common/loading/Loading";
 import { Button } from "../ui/button";

@@ -1,18 +1,16 @@
 import { api } from "@/lib/axios";
-import { MediaType, SortType } from "@/types/common.type";
-import { RatedMoviesResponse } from "@/types/movie-types";
-import { RatedTVShowsResponse } from "@/types/tv-shows-type";
+import { queryKeys } from "@/lib/queryKeys";
+import { MediaType, SortType } from "@/types/common";
+import { RatedMediaResponse } from "@/types/rating";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
-
-type MyRatingsResponse = RatedMoviesResponse | RatedTVShowsResponse;
 
 async function queryFn(
   mediaType: MediaType,
   sort: SortType,
   pageParam: number,
-): Promise<MyRatingsResponse> {
-  const { data } = await api.get<MyRatingsResponse>(
-    `account/23515191/rated/${mediaType}`,
+): Promise<RatedMediaResponse> {
+  const { data } = await api.get<RatedMediaResponse>(
+    `account/${process.env.EXPO_PUBLIC_ACCOUNT_ID}/rated/${mediaType}`,
     {
       params: {
         sort_by: `created_at.${sort}`,
@@ -26,14 +24,14 @@ async function queryFn(
 
 export function useGetMyRatings(mediaType: MediaType, sort: SortType) {
   return useInfiniteQuery<
-    MyRatingsResponse,
+    RatedMediaResponse,
     Error,
-    InfiniteData<MyRatingsResponse>,
+    InfiniteData<RatedMediaResponse>,
     unknown[],
     number
   >({
-    queryKey: ["my-ratings", mediaType, sort],
-    queryFn: ({ pageParam = 1 }) => queryFn(mediaType, sort, pageParam),
+    queryKey: [...queryKeys.myRatings, mediaType, sort],
+    queryFn: ({ pageParam }) => queryFn(mediaType, sort, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       return lastPage.page < lastPage.total_pages

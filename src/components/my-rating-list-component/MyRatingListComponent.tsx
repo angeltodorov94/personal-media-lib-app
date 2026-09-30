@@ -2,8 +2,8 @@ import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { getBarColor } from "@/lib/getBarColor";
-import { MovieSummary, RatedMovie, TradingMovie } from "@/types/movie-types";
-import { RatedTVShow, TradingTVShow, TVSummary } from "@/types/tv-shows-type";
+import { MovieSummary, RatedMovie, TrendingMovie } from "@/types/movie";
+import { RatedTVShow, TrendingTVShow, TVSummary } from "@/types/tv";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { ProgressRingChart } from "../charts/progress-ring-chart";
 
@@ -11,8 +11,8 @@ type Props = {
   item:
     | RatedMovie
     | RatedTVShow
-    | TradingMovie
-    | TradingTVShow
+    | TrendingMovie
+    | TrendingTVShow
     | MovieSummary
     | TVSummary;
   screen: "discover" | "ratings";

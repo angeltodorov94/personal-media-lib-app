@@ -1,5 +1,5 @@
 import { OptionType } from "@/components/ui/combobox";
-import { MediaType } from "@/types/common.type";
+import { MediaType } from "@/types/common";
 import { create } from "zustand";
 
 export type FiltersType = {

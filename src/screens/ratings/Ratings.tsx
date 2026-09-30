@@ -17,20 +17,15 @@ import {
   setIsSortingPanelOpen,
   useSortingStore,
 } from "@/stores/useSortingStore";
-import { RatedMovie } from "@/types/movie-types";
-import { RatedTVShow } from "@/types/tv-shows-type";
+import { RatedMedia } from "@/types/rating";
 import { useNavigation, useRouter } from "expo-router";
 import { ArrowDownUp, FunnelPlus, FunnelX } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 import { Animated, RefreshControl } from "react-native";
 
-type RatingModalType = RatedMovie | RatedTVShow | null;
-
 export default function RatingsScreen() {
-  const [ratingToEdit, setRatingToEdit] = useState<RatingModalType>(null);
-  const { ref, height, onScroll } = useFlatListHeaderAnimation<
-    RatedMovie | RatedTVShow
-  >();
+  const [ratingToEdit, setRatingToEdit] = useState<RatedMedia | null>(null);
+  const { ref, height, onScroll } = useFlatListHeaderAnimation<RatedMedia>();
   const mediaType = useFiltersStore((s) => s.ratingsScreenMediaType);
   const filters = useFiltersStore((s) => s.ratingsScreenFilters);
   const isFiltersOn =
@@ -49,8 +44,7 @@ export default function RatingsScreen() {
     isRefetching,
     error,
   } = useGetMyRatings(mediaType, sorting.orderBy);
-  const movies: (RatedMovie | RatedTVShow)[] =
-    data?.pages.flatMap((p) => p.results as (RatedMovie | RatedTVShow)[]) ?? [];
+  const movies = data?.pages.flatMap((p) => p.results) ?? [];
 
   const navigation = useNavigation();
   const router = useRouter();
@@ -80,7 +74,7 @@ export default function RatingsScreen() {
 
   return (
     <>
-      <Animated.FlatList<RatedMovie | RatedTVShow>
+      <Animated.FlatList<RatedMedia>
         refreshControl={
           <RefreshControl
             refreshing={isRefetching}

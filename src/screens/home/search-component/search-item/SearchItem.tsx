@@ -1,16 +1,13 @@
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
-import { TradingMovie } from "@/types/movie-types";
-import { TMDBSearchPersonResult } from "@/types/person-types";
-import { TMDBMultiSearchResult } from "@/types/search-types";
-import { TradingTVShow } from "@/types/tv-shows-type";
+import { MultiSearchResult } from "@/types/search";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
 
 type Props = {
-  item: TMDBMultiSearchResult;
+  item: MultiSearchResult;
   onClick: () => void;
 };
 
@@ -33,32 +30,29 @@ const SearchItem = ({ item, onClick }: Props) => {
   useEffect(() => {
     switch (item.media_type) {
       case "person":
-        const person = item as TMDBSearchPersonResult;
         setData({
-          url: person.profile_path || "",
-          text: person.name,
+          url: item.profile_path || "",
+          text: item.name,
           type: "person",
           year: "",
           pathname: "/person/[id]",
         });
         break;
       case "movie":
-        const movie = item as TradingMovie;
         setData({
-          url: movie.poster_path || "",
-          text: movie.title,
+          url: item.poster_path || "",
+          text: item.title,
           type: "movie",
-          year: new Date(movie.release_date).getFullYear().toString(),
+          year: new Date(item.release_date).getFullYear().toString(),
           pathname: "/movie/[id]",
         });
         break;
-      default:
-        const tv = item as TradingTVShow;
+      case "tv":
         setData({
-          url: tv.poster_path || "",
-          text: tv.name,
+          url: item.poster_path || "",
+          text: item.name,
           type: "tv",
-          year: new Date(tv.first_air_date).getFullYear().toString(),
+          year: new Date(item.first_air_date).getFullYear().toString(),
           pathname: "/tv/[id]",
         });
         break;

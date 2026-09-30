@@ -1,8 +1,8 @@
 import { api } from "@/lib/axios";
 import { FiltersType } from "@/stores/useFiltersStore";
 import { SortState } from "@/stores/useSortingStore";
-import { MediaType } from "@/types/common.type";
-import { MovieDiscoverResponse } from "@/types/movie-types";
+import { MediaType } from "@/types/common";
+import { MovieListResponse } from "@/types/movie";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 
 export function useGetDiscoverMovie(
@@ -11,20 +11,35 @@ export function useGetDiscoverMovie(
   sort: SortState,
 ) {
   return useInfiniteQuery<
-    MovieDiscoverResponse, // TQueryFnData: Return type of your queryFn for a single page
+    MovieListResponse, // TQueryFnData: Return type of your queryFn for a single page
     Error, // TError: Error type
-    InfiniteData<MovieDiscoverResponse>, // TData: Shape of query.data
+    InfiniteData<MovieListResponse>, // TData: Shape of query.data
     unknown[], // TQueryKey: Query key tuple type
-    number
+    number // TPageParam: Type of pageParam passed to queryFn
   >({
-    // TPageParam: Type of pageParam passed to queryFn>
-    queryKey: ["discover-movie", params, sort],
+    queryKey: ["discover-movie", type, params, sort],
     queryFn: async ({ pageParam }) => {
       const countries = params.countries.map((c) => c.value).join("|");
       const genres = params.genres.map((g) => g.value).join(",");
 
-      const url = `discover/movie?vote_average.gte=${params.minRating}&vote_average.lte=${params.maxRating}&primary_release_date.gte=${params.minYear && params.minYear + "-01-01"}&primary_release_date.lte=${params.maxYear && params.maxYear + "-12-31"}&with_genres=${genres}&with_origin_country=${countries}&sort_by=${sort.sortBy}.${sort.orderBy}&vote_count.gte=100&page=${pageParam}`;
-      const { data } = await api.get(url);
+      // Empty/undefined values are left out of the request entirely
+      const { data } = await api.get<MovieListResponse>("discover/movie", {
+        params: {
+          "vote_average.gte": params.minRating || undefined,
+          "vote_average.lte": params.maxRating || undefined,
+          "primary_release_date.gte": params.minYear
+            ? `${params.minYear}-01-01`
+            : undefined,
+          "primary_release_date.lte": params.maxYear
+            ? `${params.maxYear}-12-31`
+            : undefined,
+          with_genres: genres || undefined,
+          with_origin_country: countries || undefined,
+          sort_by: `${sort.sortBy}.${sort.orderBy}`,
+          "vote_count.gte": 100,
+          page: pageParam,
+        },
+      });
 
       return data;
     },

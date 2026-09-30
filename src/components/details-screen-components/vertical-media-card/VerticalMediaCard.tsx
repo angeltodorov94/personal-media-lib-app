@@ -1,7 +1,7 @@
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
-import { MovieSummary } from "@/types/movie-types";
-import { TVSummary } from "@/types/tv-shows-type";
+import { MovieSummary } from "@/types/movie";
+import { TVSummary } from "@/types/tv";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 type Props = {

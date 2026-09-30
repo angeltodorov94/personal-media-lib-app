@@ -17,7 +17,7 @@ import {
   setIsFilterPanelOpen,
   useFiltersStore,
 } from "@/stores/useFiltersStore";
-import { MediaType } from "@/types/common.type";
+import { MediaType } from "@/types/common";
 import {
   CalendarArrowDown,
   CalendarArrowUp,

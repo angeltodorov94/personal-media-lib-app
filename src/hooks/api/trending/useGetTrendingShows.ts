@@ -1,9 +1,9 @@
 import { api } from "@/lib/axios";
-import { TradingTVShowsResponse } from "@/types/tv-shows-type";
+import { TrendingTVShowsResponse } from "@/types/tv";
 import { useQuery } from "@tanstack/react-query";
 
-async function queryFn(): Promise<TradingTVShowsResponse> {
-  const { data } = await api.get(`trending/tv/week`);
+async function queryFn(): Promise<TrendingTVShowsResponse> {
+  const { data } = await api.get<TrendingTVShowsResponse>(`trending/tv/week`);
 
   return data;
 }

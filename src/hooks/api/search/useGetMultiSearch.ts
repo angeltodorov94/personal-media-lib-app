@@ -1,16 +1,19 @@
 import { api } from "@/lib/axios";
-import { TMDBSearchMultiResponse } from "@/types/search-types";
+import { SearchMultiResponse } from "@/types/search";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 async function queryFn(
   search: string,
   page = 1,
-): Promise<TMDBSearchMultiResponse> {
-  const { data } = await api.get(
-    `search/multi?query=${encodeURIComponent(
-      search,
-    )}&include_adult=false&language=en-US&page=${page}`,
-  );
+): Promise<SearchMultiResponse> {
+  const { data } = await api.get<SearchMultiResponse>("search/multi", {
+    params: {
+      query: search,
+      include_adult: false,
+      language: "en-US",
+      page,
+    },
+  });
 
   return data;
 }

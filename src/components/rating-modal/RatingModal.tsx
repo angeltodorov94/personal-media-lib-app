@@ -6,8 +6,9 @@ import { View } from "@/components/ui/view";
 import { useAddRating } from "@/hooks/api/rating/useAddRating";
 import { useDeleteRating } from "@/hooks/api/rating/useDeleteRating";
 import { useColor } from "@/hooks/useColor";
-import { MovieDetailsWithExtras, RatedMovie } from "@/types/movie-types";
-import { RatedTVShow, TVSeriesDetailsWithExtras } from "@/types/tv-shows-type";
+import { MovieDetailsWithExtras } from "@/types/movie";
+import { RatedMedia } from "@/types/rating";
+import { TVSeriesDetailsWithExtras } from "@/types/tv";
 import {
   Star,
   StarHalf,
@@ -24,8 +25,7 @@ const GOLD = "#f5c518";
 type Props = {
   isVisible: boolean;
   item:
-    | RatedMovie
-    | RatedTVShow
+    | RatedMedia
     | MovieDetailsWithExtras
     | TVSeriesDetailsWithExtras
     | null;
@@ -37,7 +37,9 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
     if (!item) return 0;
 
     if ("account_states" in item) {
-      return item.account_states.rated?.value || 0;
+      const { rated } = item.account_states;
+
+      return rated ? rated.value : 0;
     }
 
     return item.rating || 0;
@@ -75,7 +77,6 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
   } = useAddRating(
     !item ? "movie" : "first_air_date" in item ? "tv" : "movie",
     !item ? 0 : item.id,
-    rating,
   );
 
   useEffect(() => {
@@ -172,7 +173,7 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
           size="sm"
           variant="outline"
           style={{ flex: 1 }}
-          onPress={mutateDelete}
+          onPress={() => mutateDelete()}
           loading={isPendingDelete}
           loadingVariant="circle"
           disabled={isPendingAdd}
@@ -183,7 +184,7 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
           size="sm"
           variant="outline"
           style={{ flex: 1 }}
-          onPress={mutateAdd}
+          onPress={() => mutateAdd(rating)}
           loading={isPendingAdd}
           loadingVariant="circle"
           disabled={isPendingDelete}

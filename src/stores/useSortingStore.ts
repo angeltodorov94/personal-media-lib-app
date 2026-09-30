@@ -1,4 +1,4 @@
-import { SortType } from "@/types/common.type";
+import { SortType } from "@/types/common";
 import { create } from "zustand";
 
 export const sortingFields: {

@@ -1,9 +1,9 @@
 import { api } from "@/lib/axios";
-import { MovieSimilarResponse } from "@/types/movie-types";
+import { MovieListResponse } from "@/types/movie";
 import { useQuery } from "@tanstack/react-query";
 
-async function queryFn(id: string): Promise<MovieSimilarResponse> {
-  const { data } = await api.get(`movie/${id}/similar`);
+async function queryFn(id: string): Promise<MovieListResponse> {
+  const { data } = await api.get<MovieListResponse>(`movie/${id}/similar`);
 
   return data;
 }

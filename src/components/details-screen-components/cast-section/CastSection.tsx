@@ -6,8 +6,8 @@ import {
   AggregateCastMember,
   CastMember,
   CrewMember,
-} from "@/types/person-types";
-import { CreatedBy } from "@/types/tv-shows-type";
+} from "@/types/person";
+import { CreatedBy } from "@/types/tv";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";

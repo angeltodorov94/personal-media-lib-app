@@ -4,7 +4,7 @@ import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { useColor } from "@/hooks/useColor";
 import { getBarColor } from "@/lib/getBarColor";
-import { AccountStates } from "@/types/common.type";
+import { AccountStates } from "@/types/common";
 import { PropsWithChildren } from "react";
 import { useWindowDimensions } from "react-native";
 

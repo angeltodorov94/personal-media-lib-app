@@ -1,5 +1,14 @@
 {
   "enabledPlugins": {
     "expo@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "npm run lint",
+      "npm run type-check",
+      "npx tsc --noEmit",
+      "npx expo start"
+    ],
+    "deny": ["git push*", "npm install*", "npx eas-cli build*"]
   }
 }

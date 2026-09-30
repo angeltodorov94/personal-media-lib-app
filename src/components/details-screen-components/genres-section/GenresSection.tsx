@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { View } from "@/components/ui/view";
-import { Genre } from "@/types/common.type";
+import { Genre } from "@/types/common";
 
 type Props = {
   genres: Genre[];
