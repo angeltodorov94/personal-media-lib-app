@@ -6,8 +6,8 @@ import { View } from "@/components/ui/view";
 import { useAddRating } from "@/hooks/api/rating/useAddRating";
 import { useDeleteRating } from "@/hooks/api/rating/useDeleteRating";
 import { useColor } from "@/hooks/useColor";
-import { RatedMovie } from "@/types/movie-types";
-import { RatedTVShow } from "@/types/tv-shows-type";
+import { MovieDetailsWithExtras, RatedMovie } from "@/types/movie-types";
+import { RatedTVShow, TVSeriesDetailsWithExtras } from "@/types/tv-shows-type";
 import {
   Star,
   StarHalf,
@@ -22,12 +22,26 @@ const TOTAL_STARS = 10;
 const GOLD = "#f5c518";
 
 type Props = {
-  item: RatedMovie | RatedTVShow | null;
+  isVisible: boolean;
+  item:
+    | RatedMovie
+    | RatedTVShow
+    | MovieDetailsWithExtras
+    | TVSeriesDetailsWithExtras
+    | null;
   onClose: () => void;
 };
 
-const RatingModal = ({ item, onClose }: Props) => {
-  const originalRating = item?.rating || 0;
+const RatingModal = ({ item, isVisible, onClose }: Props) => {
+  const originalRating = (): number => {
+    if (!item) return 0;
+
+    if ("account_states" in item) {
+      return item.account_states.rated?.value || 0;
+    }
+
+    return item.rating || 0;
+  };
   const originalTitle = !item
     ? ""
     : "original_title" in item
@@ -43,6 +57,7 @@ const RatingModal = ({ item, onClose }: Props) => {
   const addColor = useColor("success");
 
   const [rating, setRating] = useState(originalRating);
+
   const {
     mutate: mutateDelete,
     isPending: isPendingDelete,
@@ -121,7 +136,7 @@ const RatingModal = ({ item, onClose }: Props) => {
 
   return (
     <AlertDialog
-      isVisible={!!item}
+      isVisible={isVisible}
       dismissible
       onClose={onClose}
       confirmText=""
@@ -142,7 +157,7 @@ const RatingModal = ({ item, onClose }: Props) => {
           variant="outline"
           style={{ flex: 1 }}
           onPress={() => {
-            if (originalRating !== rating) {
+            if (originalRating() !== rating) {
               setRating(originalRating);
               return;
             }

@@ -13,5 +13,6 @@ export function useGetGenres(type: "movie" | "tv") {
     queryKey: ["genres", type],
     queryFn: () => queryFn(type),
     staleTime: Infinity,
+    gcTime: Infinity,
   });
 }

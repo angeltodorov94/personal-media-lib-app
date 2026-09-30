@@ -1,7 +1,7 @@
 import HeaderComponent from "@/components/header/header-component/HeaderComponent";
 import { Stack } from "expo-router";
 
-export default function RatingsStackLayout() {
+export default function TabStackLayout() {
   return (
     <Stack
       screenOptions={{
@@ -9,7 +9,6 @@ export default function RatingsStackLayout() {
         headerTransparent: true,
       }}
     >
-      <Stack.Screen name="index" />
       <Stack.Screen name="person/[id]" options={{ title: "Actor" }} />
       <Stack.Screen name="tv/[id]" options={{ title: "TV Show" }} />
       <Stack.Screen name="movie/[id]" options={{ title: "Movie" }} />

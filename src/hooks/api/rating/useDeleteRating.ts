@@ -22,6 +22,9 @@ export function useDeleteRating(type: "movie" | "tv", id: number) {
       qC.invalidateQueries({
         queryKey: ["my-ratings"],
       });
+      qC.invalidateQueries({
+        queryKey: [type === "tv" ? "tv-show-details" : "movie-details", id],
+      });
 
       success("Success!", res.status_message);
     },

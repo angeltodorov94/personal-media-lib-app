@@ -15,7 +15,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="home"
+        name="(home)"
         options={{
           title: "Home",
           tabBarIcon: ({ color, size }) => (
@@ -24,7 +24,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="discover"
+        name="(discover)"
         options={{
           title: "Discover",
           tabBarIcon: ({ focused, color, size }) => (
@@ -37,7 +37,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="ratings"
+        name="(ratings)"
         options={{
           title: "My Ratings",
           tabBarIcon: ({ focused, color, size }) => (

@@ -9,6 +9,7 @@ import MainSection from "@/components/details-screen-components/main-section/Mai
 import OverviewSection from "@/components/details-screen-components/overview-section/OverviewSection";
 import RecommendationsTitles from "@/components/details-screen-components/recommendations-titles/RecommendationsTitles";
 import SimilarTitles from "@/components/details-screen-components/similar-titles/SimilarTitles";
+import RatingModal from "@/components/rating-modal/RatingModal";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
@@ -16,10 +17,11 @@ import { useGetMovieFullDetails } from "@/hooks/api/movie/useGetMovieFullDetails
 import { getFlagEmoji } from "@/lib/getFlagEmoji";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { Dot, Star, StarPlus } from "lucide-react-native";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const navigation = useNavigation();
 
   const { data, isLoading, isError } = useGetMovieFullDetails(id);
@@ -30,7 +32,8 @@ export default function MovieDetails() {
     navigation.setOptions({
       rightButton: {
         icon: data.account_states.rated ? Star : StarPlus,
-        onPress: () => {},
+        type: data.account_states.rated ? "primary" : "secondary",
+        onPress: () => setIsRatingModalOpen(true),
       },
     });
   }, [navigation, data]);
@@ -78,6 +81,11 @@ export default function MovieDetails() {
       <ExtraSection
         imdb={data.imdb_id}
         collectionID={data.belongs_to_collection?.id}
+      />
+      <RatingModal
+        item={data}
+        isVisible={isRatingModalOpen}
+        onClose={() => setIsRatingModalOpen(false)}
       />
     </DetailsPageWrapper>
   );

@@ -11,17 +11,17 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider>
-      <ToastProvider maxToasts={3}>
-        <QueryClientProvider client={queryClient}>
-          <SafeAreaProvider>
+    <SafeAreaProvider>
+      <ThemeProvider>
+        <ToastProvider maxToasts={3}>
+          <QueryClientProvider client={queryClient}>
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
             <Stack>
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             </Stack>
-          </SafeAreaProvider>
-        </QueryClientProvider>
-      </ToastProvider>
-    </ThemeProvider>
+          </QueryClientProvider>
+        </ToastProvider>
+      </ThemeProvider>
+    </SafeAreaProvider>
   );
 }

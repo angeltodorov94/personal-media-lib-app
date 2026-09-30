@@ -3,7 +3,7 @@ import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalS
 import { Collapsible } from "@/components/ui/collapsible";
 import { useGetMovieSimilar } from "@/hooks/api/movie/useGetMovieSimilar";
 import { useGetTvShowSimilar } from "@/hooks/api/tv-show/useGetTvShowSimilar";
-import { usePathname, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import VerticalMediaCard from "../vertical-media-card/VerticalMediaCard";
 
@@ -13,7 +13,6 @@ type Props = {
 };
 
 const SimilarTitles = ({ id, type }: Props) => {
-  const basePath = usePathname().split("/")[1] as "ratings" | "discover";
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -41,7 +40,7 @@ const SimilarTitles = ({ id, type }: Props) => {
               item={item}
               onPress={() =>
                 router.navigate({
-                  pathname: `/${basePath}/${type}/[id]`,
+                  pathname: `/${type}/[id]`,
                   params: { id: item.id },
                 })
               }

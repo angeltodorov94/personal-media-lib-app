@@ -90,6 +90,7 @@ export default function RatingsScreen() {
         }
         ref={ref}
         data={movies}
+        extraData={movies}
         onScroll={onScroll}
         scrollEventThrottle={16}
         onEndReached={() => {
@@ -121,14 +122,18 @@ export default function RatingsScreen() {
             onRatingPress={() => setRatingToEdit(item)}
             onItemPress={() =>
               router.push({
-                pathname: `/ratings/${mediaType === "movies" ? "movie" : "tv"}/[id]`,
+                pathname: `/${mediaType === "movies" ? "movie" : "tv"}/[id]`,
                 params: { id: item.id },
               })
             }
           />
         )}
       />
-      <RatingModal item={ratingToEdit} onClose={() => setRatingToEdit(null)} />
+      <RatingModal
+        item={ratingToEdit}
+        isVisible={!!ratingToEdit}
+        onClose={() => setRatingToEdit(null)}
+      />
       <SortSheet type="ratings" />
       <FilterSheet type="ratings" />
     </>

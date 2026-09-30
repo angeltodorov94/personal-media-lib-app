@@ -3,7 +3,7 @@ import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalS
 import { Collapsible } from "@/components/ui/collapsible";
 import { useGetMovieRecommendations } from "@/hooks/api/movie/useGetMovieRecommendations";
 import { useGetTvShowRecommendations } from "@/hooks/api/tv-show/useGetTvShowRecommendations";
-import { usePathname, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 import VerticalMediaCard from "../vertical-media-card/VerticalMediaCard";
@@ -14,7 +14,6 @@ type Props = {
 };
 
 const RecommendationsTitles = ({ id, type }: Props) => {
-  const basePath = usePathname().split("/")[1] as "ratings" | "discover";
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -36,7 +35,7 @@ const RecommendationsTitles = ({ id, type }: Props) => {
             item={item}
             onPress={() =>
               router.navigate({
-                pathname: `/${basePath}/${type}/[id]`,
+                pathname: `/${type}/[id]`,
                 params: { id: item.id },
               })
             }

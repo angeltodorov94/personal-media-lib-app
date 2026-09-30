@@ -1,7 +1,12 @@
 import { useHeaderHeightStore } from "@/stores/useHeaderHeightStore";
 import { useFocusEffect } from "expo-router";
 import { PropsWithChildren, useCallback, useRef } from "react";
-import { Animated, ScrollView, StyleProp, ViewStyle } from "react-native";
+import {
+  Animated,
+  ScrollView,
+  StyleProp,
+  ViewStyle
+} from "react-native";
 
 type Props = PropsWithChildren<{
   style?: StyleProp<ViewStyle>;

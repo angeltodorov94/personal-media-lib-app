@@ -104,7 +104,7 @@ export default function DiscoverScreen() {
             item={item}
             onItemPress={() =>
               router.push({
-                pathname: `/discover/${mediaType === "movies" ? "movie" : "tv"}/[id]`,
+                pathname: `/${mediaType === "movies" ? "movie" : "tv"}/[id]`,
                 params: { id: item.id },
               })
             }

@@ -9,6 +9,7 @@ import MainSection from "@/components/details-screen-components/main-section/Mai
 import OverviewSection from "@/components/details-screen-components/overview-section/OverviewSection";
 import RecommendationsTitles from "@/components/details-screen-components/recommendations-titles/RecommendationsTitles";
 import SimilarTitles from "@/components/details-screen-components/similar-titles/SimilarTitles";
+import RatingModal from "@/components/rating-modal/RatingModal";
 import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
@@ -16,10 +17,11 @@ import { useGetTvShowFullDetails } from "@/hooks/api/tv-show/useGetTvShowFullDet
 import { getFlagEmoji } from "@/lib/getFlagEmoji";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { Dot, Star, StarPlus } from "lucide-react-native";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 
 function TVShowDetails() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
   const navigation = useNavigation();
 
   const { data, isLoading, isError } = useGetTvShowFullDetails(id);
@@ -30,7 +32,7 @@ function TVShowDetails() {
     navigation.setOptions({
       rightButton: {
         icon: data.account_states.rated ? Star : StarPlus,
-        onPress: () => {},
+        onPress: () => setIsRatingModalOpen(true),
       },
     });
   }, [navigation, data]);
@@ -97,6 +99,11 @@ function TVShowDetails() {
       <RecommendationsTitles id={id} type="tv" />
       <SimilarTitles id={id} type="tv" />
       <ExtraSection imdb={data.external_ids.imdb_id} />
+      <RatingModal
+        item={data}
+        isVisible={isRatingModalOpen}
+        onClose={() => setIsRatingModalOpen(false)}
+      />
     </PageWrapper>
   );
 }

@@ -25,6 +25,9 @@ export function useAddRating(type: "movie" | "tv", id: number, rating: number) {
       qC.invalidateQueries({
         queryKey: ["my-ratings"],
       });
+      qC.invalidateQueries({
+        queryKey: [type === "tv" ? "tv-show-details" : "movie-details", id],
+      });
 
       success("Success!", res.status_message);
     },

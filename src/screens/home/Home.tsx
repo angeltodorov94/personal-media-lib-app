@@ -50,7 +50,7 @@ export default function HomeScreen() {
                 item={item}
                 onPress={() =>
                   router.push({
-                    pathname: "/home/movie/[id]",
+                    pathname: "/movie/[id]",
                     params: { id: item.id },
                   })
                 }
@@ -71,7 +71,7 @@ export default function HomeScreen() {
                 item={item}
                 onPress={() =>
                   router.push({
-                    pathname: "/home/tv/[id]",
+                    pathname: "/tv/[id]",
                     params: { id: item.id },
                   })
                 }

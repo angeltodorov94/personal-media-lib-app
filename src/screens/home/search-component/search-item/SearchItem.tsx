@@ -20,13 +20,13 @@ const SearchItem = ({ item, onClick }: Props) => {
     text: string;
     type: "movie" | "tv" | "person" | "";
     year: string;
-    pathname: "/home/movie/[id]" | "/home/tv/[id]" | "/home/person/[id]";
+    pathname: "/movie/[id]" | "/tv/[id]" | "/person/[id]";
   }>({
     url: "",
     text: "",
     type: "",
     year: "",
-    pathname: "/home/movie/[id]",
+    pathname: "/movie/[id]",
   });
   const router = useRouter();
 
@@ -39,7 +39,7 @@ const SearchItem = ({ item, onClick }: Props) => {
           text: person.name,
           type: "person",
           year: "",
-          pathname: "/home/person/[id]",
+          pathname: "/person/[id]",
         });
         break;
       case "movie":
@@ -49,7 +49,7 @@ const SearchItem = ({ item, onClick }: Props) => {
           text: movie.title,
           type: "movie",
           year: new Date(movie.release_date).getFullYear().toString(),
-          pathname: "/home/movie/[id]",
+          pathname: "/movie/[id]",
         });
         break;
       default:
@@ -59,7 +59,7 @@ const SearchItem = ({ item, onClick }: Props) => {
           text: tv.name,
           type: "tv",
           year: new Date(tv.first_air_date).getFullYear().toString(),
-          pathname: "/home/tv/[id]",
+          pathname: "/tv/[id]",
         });
         break;
     }

@@ -8,7 +8,7 @@ import {
   CrewMember,
 } from "@/types/person-types";
 import { CreatedBy } from "@/types/tv-shows-type";
-import { usePathname, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 
@@ -18,7 +18,6 @@ type Props = {
 };
 
 const CastSection = ({ data, title }: Props) => {
-  const basePath = usePathname().split("/")[1] as "ratings" | "discover";
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -44,7 +43,7 @@ const CastSection = ({ data, title }: Props) => {
           episodes={episodes}
           onPress={() =>
             router.navigate({
-              pathname: `/${basePath}/person/[id]`,
+              pathname: `/person/[id]`,
               params: { id: item.id },
             })
           }

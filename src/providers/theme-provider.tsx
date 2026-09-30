@@ -1,10 +1,10 @@
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { Colors } from "@/theme/colors";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeContext,
 } from "expo-router/build/react-navigation";
-import { useColorScheme } from "react-native";
 
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const colorScheme = useColorScheme();
