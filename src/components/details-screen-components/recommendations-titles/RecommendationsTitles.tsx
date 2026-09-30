@@ -1,11 +1,12 @@
 import Loading from "@/components/common/loading/Loading";
+import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalScroll";
 import { Collapsible } from "@/components/ui/collapsible";
 import { useGetMovieRecommendations } from "@/hooks/api/movie/useGetMovieRecommendations";
 import { useGetTvShowRecommendations } from "@/hooks/api/tv-show/useGetTvShowRecommendations";
 import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
-import VerticalMovieCard from "../vertical-movie-card/VerticalMovieCard";
+import { StyleSheet } from "react-native";
+import VerticalMediaCard from "../vertical-media-card/VerticalMediaCard";
 
 type Props = {
   id: string;
@@ -28,19 +29,9 @@ const RecommendationsTitles = ({ id, type }: Props) => {
     const data = movies.data || series.data;
 
     return (
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        nestedScrollEnabled
-        contentContainerStyle={{
-          gap: 10,
-          paddingLeft: 34,
-          paddingRight: 10,
-          marginTop: 5,
-        }}
-      >
+      <HorizontalScroll isInSection>
         {data?.results.map((item) => (
-          <VerticalMovieCard
+          <VerticalMediaCard
             key={item.id}
             item={item}
             onPress={() =>
@@ -51,7 +42,7 @@ const RecommendationsTitles = ({ id, type }: Props) => {
             }
           />
         ))}
-      </ScrollView>
+      </HorizontalScroll>
     );
   };
 

@@ -25,7 +25,7 @@ const HeaderComponent = (
       {leftButton ? (
         <Button
           size="icon"
-          variant="secondary"
+          variant={leftButton.type || "secondary"}
           icon={leftButton.icon}
           onPress={leftButton.onPress}
         />
@@ -53,7 +53,7 @@ const HeaderComponent = (
       {rightButton ? (
         <Button
           size="icon"
-          variant="secondary"
+          variant={rightButton.type || "secondary"}
           icon={rightButton.icon}
           onPress={rightButton.onPress}
         />

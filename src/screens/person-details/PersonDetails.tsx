@@ -31,6 +31,7 @@ function PersonDetails() {
         <Text>{data.place_of_birth}</Text>
       </MainSection>
       <OverviewSection overview={data.biography} />
+      {/* Known for */}
       <ExtraSection imdb={data.imdb_id} />
     </DetailsPageWrapper>
   );

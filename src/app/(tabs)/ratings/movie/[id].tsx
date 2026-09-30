@@ -1,1 +1,2 @@
-export { default } from "@/components/screens/movie-details/MovieDetails";
+export { default } from "@/screens/movie-details/MovieDetails";
+

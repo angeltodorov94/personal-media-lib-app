@@ -1,1 +1,2 @@
-export { default } from "@/components/screens/person-details/PersonDetails";
+export { default } from "@/screens/person-details/PersonDetails";
+

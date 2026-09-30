@@ -118,10 +118,12 @@ export interface MovieKeywords {
 /* -------------------------------------------------------------------------- */
 /*  GET /movie/{movie_id}/similar                                             */
 /*  GET /movie/{movie_id}/recommendations                                     */
+/*  GET /discover/movie                                                       */
 /* -------------------------------------------------------------------------- */
 
 export type MovieSimilarResponse = PaginatedResponse<MovieSummary>;
 export type MovieRecommendationsResponse = PaginatedResponse<MovieSummary>;
+export type MovieDiscoverResponse = PaginatedResponse<MovieSummary>;
 
 /* -------------------------------------------------------------------------- */
 /*  GET /account/{account_id}/rated/movies                                    */

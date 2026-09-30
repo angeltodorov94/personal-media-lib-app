@@ -1,11 +1,11 @@
 import Loading from "@/components/common/loading/Loading";
+import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalScroll";
 import { Collapsible } from "@/components/ui/collapsible";
 import { useGetMovieSimilar } from "@/hooks/api/movie/useGetMovieSimilar";
 import { useGetTvShowSimilar } from "@/hooks/api/tv-show/useGetTvShowSimilar";
 import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView } from "react-native";
-import VerticalMovieCard from "../vertical-movie-card/VerticalMovieCard";
+import VerticalMediaCard from "../vertical-media-card/VerticalMediaCard";
 
 type Props = {
   id: string;
@@ -28,17 +28,7 @@ const SimilarTitles = ({ id, type }: Props) => {
     const data = movies.data || series.data;
 
     return (
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        nestedScrollEnabled
-        contentContainerStyle={{
-          gap: 10,
-          paddingLeft: 34,
-          paddingRight: 10,
-          marginTop: 5,
-        }}
-      >
+      <HorizontalScroll isInSection>
         {data?.results.map((item) => {
           const releaseDate =
             "first_air_date" in item ? item.first_air_date : item.release_date;
@@ -46,7 +36,7 @@ const SimilarTitles = ({ id, type }: Props) => {
           if (!releaseDate) return null;
 
           return (
-            <VerticalMovieCard
+            <VerticalMediaCard
               key={item.id}
               item={item}
               onPress={() =>
@@ -58,7 +48,7 @@ const SimilarTitles = ({ id, type }: Props) => {
             />
           );
         })}
-      </ScrollView>
+      </HorizontalScroll>
     );
   };
 

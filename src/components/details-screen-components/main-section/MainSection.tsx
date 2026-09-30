@@ -3,6 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { useColor } from "@/hooks/useColor";
+import { getBarColor } from "@/lib/getBarColor";
 import { AccountStates } from "@/types/common.type";
 import { PropsWithChildren } from "react";
 import { useWindowDimensions } from "react-native";
@@ -21,13 +22,6 @@ const MainSection = ({
 }: Props) => {
   const barBackgroundColor = useColor("secondary");
   const { width } = useWindowDimensions();
-
-  const getBarColor = (v: number) => {
-    if (v >= 70) return "success";
-    if (v >= 60) return "yellow";
-
-    return "error";
-  };
 
   return (
     <View

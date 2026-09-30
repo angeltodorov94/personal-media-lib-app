@@ -208,7 +208,8 @@ export function BottomSheet({
 
       if (isKeyboardVisible) {
         // Keyboard is open, move sheet up by keyboard height
-        destination = currentSnapHeight - keyboardHeight;
+        // destination = currentSnapHeight - keyboardHeight;
+        destination = snapPointsHeights[1];
       } else {
         // Keyboard is closed, return to original snap point
         destination = currentSnapHeight;

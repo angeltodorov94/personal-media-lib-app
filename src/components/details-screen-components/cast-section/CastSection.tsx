@@ -1,3 +1,4 @@
+import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalScroll";
 import { Collapsible } from "@/components/ui/collapsible";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
@@ -9,7 +10,7 @@ import {
 import { CreatedBy } from "@/types/tv-shows-type";
 import { usePathname, useRouter } from "expo-router";
 import { useState } from "react";
-import { ScrollView, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 type Props = {
   data: CastMember[] | CrewMember[] | AggregateCastMember[] | CreatedBy[];
@@ -54,19 +55,7 @@ const CastSection = ({ data, title }: Props) => {
 
   return (
     <Collapsible title={title} isOpen={isOpen} setIsOpen={setIsOpen}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        nestedScrollEnabled
-        contentContainerStyle={{
-          gap: 10,
-          paddingLeft: 34,
-          paddingRight: 10,
-          marginTop: 5,
-        }}
-      >
-        {renderData()}
-      </ScrollView>
+      <HorizontalScroll isInSection>{renderData()}</HorizontalScroll>
     </Collapsible>
   );
 };

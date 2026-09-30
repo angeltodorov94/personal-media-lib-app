@@ -1,19 +1,17 @@
-import { Button } from '@/components/ui/button';
-import { Text } from '@/components/ui/text';
-import { View } from '@/components/ui/view';
-import { useColor } from '@/hooks/useColor';
-import { BORDER_RADIUS, FONT_SIZE } from '@/theme/globals';
-import { X } from 'lucide-react-native';
-import React, { useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Text } from "@/components/ui/text";
+import { View } from "@/components/ui/view";
+import { useColor } from "@/hooks/useColor";
+import { BORDER_RADIUS, FONT_SIZE } from "@/theme/globals";
+import React, { useEffect } from "react";
 import {
   Modal,
   Platform,
   Pressable,
   StyleSheet,
-  TouchableOpacity,
   useWindowDimensions,
-  ViewStyle,
-} from 'react-native';
+  ViewStyle
+} from "react-native";
 import Animated, {
   Easing,
   interpolate,
@@ -21,10 +19,10 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type SheetSide = 'left' | 'right';
+type SheetSide = "left" | "right";
 
 interface SheetProps {
   open: boolean;
@@ -67,7 +65,7 @@ const SheetContext = React.createContext<SheetContextValue | null>(null);
 const useSheet = () => {
   const context = React.useContext(SheetContext);
   if (!context) {
-    throw new Error('Sheet components must be used within a Sheet');
+    throw new Error("Sheet components must be used within a Sheet");
   }
   return context;
 };
@@ -75,7 +73,7 @@ const useSheet = () => {
 export function Sheet({
   open,
   onOpenChange,
-  side = 'right',
+  side = "right",
   children,
 }: SheetProps) {
   return (
@@ -110,12 +108,13 @@ export function SheetContent({ children, style }: SheetContentProps) {
   const sheetWidth = Math.min(screenWidth * 0.8, 400);
   const [isVisible, setIsVisible] = React.useState(open);
 
-  const backgroundColor = useColor('background');
-  const borderColor = useColor('border');
-  const iconColor = useColor('text');
+  const backgroundColor = useColor("background");
+  const borderColor = useColor("border");
+  const closeBtnBackgroundColor = useColor("secondary");
+  const iconColor = useColor("text");
 
   // Animation values using Reanimated's useSharedValue
-  const initialPosition = side === 'left' ? -sheetWidth : sheetWidth;
+  const initialPosition = side === "left" ? -sheetWidth : sheetWidth;
   const translateX = useSharedValue(initialPosition);
   const overlayOpacity = useSharedValue(0);
 
@@ -123,7 +122,7 @@ export function SheetContent({ children, style }: SheetContentProps) {
   useEffect(() => {
     // Reset position if side changes while closed
     if (open && !isVisible) {
-      translateX.value = side === 'left' ? -sheetWidth : sheetWidth;
+      translateX.value = side === "left" ? -sheetWidth : sheetWidth;
     }
 
     if (open) {
@@ -144,7 +143,7 @@ export function SheetContent({ children, style }: SheetContentProps) {
             // Use runOnJS to update React state from the UI thread
             runOnJS(setIsVisible)(false);
           }
-        }
+        },
       );
       overlayOpacity.value = withTiming(0, { duration: 250 });
     }
@@ -176,7 +175,7 @@ export function SheetContent({ children, style }: SheetContentProps) {
     <Modal
       visible={isVisible}
       transparent={true}
-      animationType='none'
+      animationType="none"
       onRequestClose={handleClose}
       statusBarTranslucent={true}
     >
@@ -203,22 +202,22 @@ export function SheetContent({ children, style }: SheetContentProps) {
           accessibilityViewIsModal
         >
           {/* Close button */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[
               styles.closeButton,
               {
-                backgroundColor: backgroundColor,
+                backgroundColor: closeBtnBackgroundColor,
                 top: insets.top + 10,
-                [side === 'left' ? 'right' : 'left']: 16,
+                [side === "left" ? "right" : "left"]: 16,
               },
             ]}
             onPress={handleClose}
             hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-            accessibilityRole='button'
-            accessibilityLabel='Close'
+            accessibilityRole="button"
+            accessibilityLabel="Close"
           >
             <X size={20} color={iconColor} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* Content */}
           <View style={styles.contentContainer}>{children}</View>
@@ -234,7 +233,7 @@ export function SheetHeader({ children, style }: SheetHeaderProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.header, { paddingTop: insets.top + 50 }, style]}>
+    <View style={[styles.header, { paddingTop: insets.top + 10 }, style]}>
       {children}
     </View>
   );
@@ -242,14 +241,14 @@ export function SheetHeader({ children, style }: SheetHeaderProps) {
 
 export function SheetTitle({ children }: SheetTitleProps) {
   return (
-    <Text variant='title' style={styles.title}>
+    <Text variant="title" style={styles.title}>
       {children}
     </Text>
   );
 }
 
 export function SheetDescription({ children }: SheetDescriptionProps) {
-  const mutedColor = useColor('textMuted');
+  const mutedColor = useColor("textMuted");
 
   return (
     <Text style={[styles.description, { color: mutedColor }]}>{children}</Text>
@@ -262,20 +261,20 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0, 0, 0, 1)', // Opacity is controlled by animation
+    backgroundColor: "rgba(0, 0, 0, 1)", // Opacity is controlled by animation
   },
   overlayPressable: {
     flex: 1,
   },
   sheet: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     borderLeftWidth: 1,
     borderRightWidth: 1,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: "#000",
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.25,
         shadowRadius: 8,
@@ -286,13 +285,13 @@ const styles = StyleSheet.create({
     }),
   },
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
     borderRadius: 999, // Make it circular
     width: 32,
     height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   contentContainer: {
     flex: 1,

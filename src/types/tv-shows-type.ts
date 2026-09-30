@@ -31,24 +31,24 @@ import { AggregateCastMember, AggregateCrewMember } from "./person-types";
 /*  Shared / building-block types                                             */
 /* -------------------------------------------------------------------------- */
 
-export interface CreatedBy {
+export type CreatedBy = {
   id: number;
   credit_id: string;
   name: string;
   original_name: string;
   gender: TmdbGender;
   profile_path: string | null;
-}
+};
 
-export interface Network {
+export type Network = {
   id: number;
   logo_path: string | null;
   name: string;
   origin_country: string;
-}
+};
 
 /** Last/next episode to air, embedded in TV series details */
-export interface EpisodeToAir {
+export type EpisodeToAir = {
   id: number;
   name: string;
   overview: string;
@@ -62,10 +62,10 @@ export interface EpisodeToAir {
   season_number: number;
   show_id: number;
   still_path: string | null;
-}
+};
 
 /** Condensed season summary embedded in TV series details */
-export interface SeasonSummary {
+export type SeasonSummary = {
   air_date: string | null;
   episode_count: number;
   id: number;
@@ -74,13 +74,13 @@ export interface SeasonSummary {
   poster_path: string | null;
   season_number: number;
   vote_average: number;
-}
+};
 
 /**
  * Condensed TV shape returned in list-style endpoints
  * (similar, recommendations, search, discover, etc).
  */
-export interface TVSummary {
+export type TVSummary = {
   adult: boolean;
   backdrop_path: string | null;
   genre_ids: number[];
@@ -95,13 +95,13 @@ export interface TVSummary {
   name: string;
   vote_average: number;
   vote_count: number;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 /*  GET /tv/{series_id}                                                       */
 /* -------------------------------------------------------------------------- */
 
-export interface TVSeriesDetails {
+export type TVSeriesDetails = {
   adult: boolean;
   backdrop_path: string | null;
   created_by: CreatedBy[];
@@ -148,23 +148,23 @@ export interface TVSeriesDetails {
     | "Video";
   vote_average: number;
   vote_count: number;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 /*  GET /tv/{series_id}/aggregate_credits                                     */
 /* -------------------------------------------------------------------------- */
 
-export interface TVAggregateCredits {
+export type TVAggregateCredits = {
   id: number;
   cast: AggregateCastMember[];
   crew: AggregateCrewMember[];
-}
+};
 
 /* -------------------------------------------------------------------------- */
 /*  GET /tv/{series_id}/external_ids                                     */
 /* -------------------------------------------------------------------------- */
 
-export interface TMDbTVSeriesExternalIds {
+export type TMDbTVSeriesExternalIds = {
   id: number;
   imdb_id: string | null;
   freebase_mid: string | null;
@@ -175,25 +175,27 @@ export interface TMDbTVSeriesExternalIds {
   facebook_id: string | null;
   instagram_id: string | null;
   twitter_id: string | null;
-}
+};
 
 /* -------------------------------------------------------------------------- */
 /*  GET /tv/{series_id}/keywords                                              */
 /* -------------------------------------------------------------------------- */
 
 /** Note: unlike the movie endpoint, TV keywords are returned under `results`, not `keywords`. */
-export interface TVKeywords {
+export type TVKeywords = {
   id: number;
   results: Keyword[];
-}
+};
 
 /* -------------------------------------------------------------------------- */
 /*  GET /tv/{series_id}/similar                                               */
 /*  GET /tv/{series_id}/recommendations                                       */
+/*  GET /discover/tv                                                          */
 /* -------------------------------------------------------------------------- */
 
 export type TVSimilarResponse = PaginatedResponse<TVSummary>;
 export type TVRecommendationsResponse = PaginatedResponse<TVSummary>;
+export type TVDiscoverResponse = PaginatedResponse<TVSummary>;
 
 /* -------------------------------------------------------------------------- */
 /*  GET /account/{account_id}/rated/tv                                    */

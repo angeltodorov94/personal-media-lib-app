@@ -1,1 +1,2 @@
-export { default } from "@/components/screens/ratings/Ratings";
+export { default } from "@/screens/ratings/Ratings";
+

@@ -9,7 +9,7 @@ type Props = {
   onPress: () => void;
 };
 
-const VerticalMovieCard = ({ item, onPress }: Props) => {
+const VerticalMediaCard = ({ item, onPress }: Props) => {
   const title = "title" in item ? item.title : item.name;
   const releaseDate =
     "first_air_date" in item ? item.first_air_date : item.release_date;
@@ -36,7 +36,7 @@ const VerticalMovieCard = ({ item, onPress }: Props) => {
   );
 };
 
-export default VerticalMovieCard;
+export default VerticalMediaCard;
 
 const s = StyleSheet.create({
   imgContainer: {

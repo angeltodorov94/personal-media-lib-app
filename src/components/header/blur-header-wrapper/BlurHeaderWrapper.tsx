@@ -1,3 +1,4 @@
+import { ButtonVariant } from "@/components/ui/button";
 import { useColor } from "@/hooks/useColor";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { setHeight, useHeaderHeightStore } from "@/stores/useHeaderHeightStore";
@@ -11,10 +12,12 @@ import { View } from "../../ui/view";
 export type HeaderOptions = {
   rightButton?: {
     icon: ComponentType<LucideProps>;
+    type?: ButtonVariant;
     onPress: () => void;
   };
   leftButton?: {
     icon: ComponentType<LucideProps>;
+    type?: ButtonVariant;
     onPress: () => void;
   };
   label?: string;

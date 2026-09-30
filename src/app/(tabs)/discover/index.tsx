@@ -1,1 +1,2 @@
-export { default } from "@/components/screens/discover/Discover";
+export { default } from "@/screens/discover/Discover";
+
