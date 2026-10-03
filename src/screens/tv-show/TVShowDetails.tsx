@@ -56,7 +56,7 @@ function TVShowDetails() {
 
     return `${startYear} - ${lastYear}`;
   };
-  console.log(data.origin_country);
+
   return (
     <PageWrapper>
       <MainSection
@@ -106,9 +106,21 @@ function TVShowDetails() {
       <GenresSection genres={data.genres} />
       <OverviewSection overview={data.overview} />
       <KeywordsSection data={data.keywords.results} />
-      <CastSection title="Created By" data={data.created_by} />
-      <CastSection isCrew title="Crew" data={data.aggregate_credits.crew} />
-      <CastSection title="Cast" data={data.aggregate_credits.cast} />
+      <CastSection
+        type="created_by"
+        title="Created By"
+        data={data.created_by}
+      />
+      <CastSection
+        type="crew"
+        title="Crew"
+        data={data.aggregate_credits.crew}
+      />
+      <CastSection
+        type="cast"
+        title="Cast"
+        data={data.aggregate_credits.cast}
+      />
       <RecommendationsTitles id={id} type="tv" />
       <SimilarTitles id={id} type="tv" />
       <ExtraSection imdb={data.external_ids.imdb_id} />

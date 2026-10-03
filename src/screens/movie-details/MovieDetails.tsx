@@ -44,7 +44,7 @@ export default function MovieDetails() {
   if (isError || !data) {
     return <Error />;
   }
-  console.log(data.belongs_to_collection);
+
   return (
     <DetailsPageWrapper>
       <MainSection
@@ -76,8 +76,8 @@ export default function MovieDetails() {
       <GenresSection genres={data.genres} />
       <OverviewSection overview={data.overview} />
       <KeywordsSection data={data.keywords.keywords} />
-      <CastSection title="Crew" data={data.credits.crew} />
-      <CastSection title="Cast" data={data.credits.cast} />
+      <CastSection type="crew" title="Crew" data={data.credits.crew} />
+      <CastSection type="cast" title="Cast" data={data.credits.cast} />
       <RecommendationsTitles id={id} type="movie" />
       <SimilarTitles id={id} type="movie" />
       <ExtraSection

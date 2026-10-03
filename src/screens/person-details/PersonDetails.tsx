@@ -81,7 +81,7 @@ function PersonDetailsScreen() {
   if (isError || !data) {
     return <Error />;
   }
-  console.log(data.combined_credits.crew);
+
   return (
     <DetailsPageWrapper>
       <MainSection img={data.profile_path}>

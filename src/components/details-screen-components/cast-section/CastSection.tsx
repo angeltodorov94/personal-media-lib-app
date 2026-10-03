@@ -21,10 +21,10 @@ type Props = {
     | AggregateCrewMember[]
     | CreatedBy[];
   title: string;
-  isCrew?: boolean;
+  type: "cast" | "crew" | "created_by";
 };
 
-const CastSection = ({ data, title, isCrew }: Props) => {
+const CastSection = ({ data, title, type }: Props) => {
   if (data.length === 0) return null;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,7 @@ const CastSection = ({ data, title, isCrew }: Props) => {
                 ? item.jobs.map((j) => j.job).join(" / ")
                 : item.name;
       const episodes =
-        !isCrew && "total_episode_count" in item
+        type === "cast" && "total_episode_count" in item
           ? item.total_episode_count
           : null;
 
