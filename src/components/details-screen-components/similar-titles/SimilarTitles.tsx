@@ -27,7 +27,7 @@ const SimilarTitles = ({ id, type }: Props) => {
     const data = movies.data || series.data;
 
     return (
-      <HorizontalScroll isInSection>
+      <HorizontalScroll style={{ paddingLeft: 35 }}>
         {data?.results.map((item) => {
           const releaseDate =
             "first_air_date" in item ? item.first_air_date : item.release_date;

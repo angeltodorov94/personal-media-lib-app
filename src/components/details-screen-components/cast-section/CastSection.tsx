@@ -1,8 +1,8 @@
-import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalScroll";
 import RipplePressable from "@/components/ripple-pressable/RipplePressable";
 import { Collapsible } from "@/components/ui/collapsible";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
+import { View } from "@/components/ui/view";
 import {
   AggregateCastMember,
   AggregateCrewMember,
@@ -67,7 +67,7 @@ const CastSection = ({ data, title, type }: Props) => {
 
   return (
     <Collapsible title={title} isOpen={isOpen} setIsOpen={setIsOpen}>
-      <HorizontalScroll isInSection>{renderData()}</HorizontalScroll>
+      {renderData()}
     </Collapsible>
   );
 };
@@ -87,29 +87,33 @@ const Component = ({
   episodes: number | null;
   onPress: () => void;
 }) => (
-  <RipplePressable style={{ width: 128 }} onPress={onPress}>
+  <RipplePressable
+    style={{
+      flexDirection: "row",
+      alignItems: "center",
+      gap: 10,
+      paddingLeft: 35,
+      paddingVertical: 5,
+      paddingRight: 10,
+    }}
+    onPress={onPress}
+  >
     <Image
       source={{
-        uri: `https://image.tmdb.org/t/p/h632${img}`,
+        uri: `https://image.tmdb.org/t/p/w185${img}`,
       }}
       alt="Alt image"
-      height={128}
-      width={128}
-      variant="circle"
-      contentPosition="center"
+      errorFallbackText={main.slice(0, 1).toUpperCase()}
+      height={50}
+      width={50}
     />
-    <Text numberOfLines={2} style={{ fontSize: 16, textAlign: "center" }}>
-      {main}
-    </Text>
-    <Text
-      variant="caption"
-      numberOfLines={2}
-      style={{ fontSize: 14, textAlign: "center" }}
-    >
-      {sub}
-    </Text>
-    <Text variant="caption" style={{ fontSize: 14, textAlign: "center" }}>
-      {episodes}
-    </Text>
+    <View>
+      <Text variant="subtitle" style={{ fontSize: 16 }}>
+        {main}
+      </Text>
+      <Text variant="caption" numberOfLines={2} style={{ fontSize: 14 }}>
+        {`${sub} ${episodes ? `(${episodes} episodes)` : ""}`}
+      </Text>
+    </View>
   </RipplePressable>
 );

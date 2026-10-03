@@ -28,7 +28,7 @@ const RecommendationsTitles = ({ id, type }: Props) => {
     const data = movies.data || series.data;
 
     return (
-      <HorizontalScroll isInSection>
+      <HorizontalScroll style={{ paddingLeft: 35 }}>
         {data?.results.map((item) => (
           <VerticalMediaCard
             key={item.id}
