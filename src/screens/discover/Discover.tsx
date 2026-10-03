@@ -43,7 +43,7 @@ export default function DiscoverScreen() {
     error,
   } = useGetDiscoverMovie(mediaType, filters, sorting);
   const movies = data?.pages.flatMap((p) => p.results) ?? [];
-
+  console.log(mediaType);
   const navigation = useNavigation();
   const router = useRouter();
 

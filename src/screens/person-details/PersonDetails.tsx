@@ -88,7 +88,7 @@ function PersonDetailsScreen() {
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
             <Text variant="subtitle">{data.name}</Text>
-            <Text variant="caption" style={{ fontWeight: 500 }}>
+            <Text variant="caption" style={{ fontWeight: 500, fontSize: 16 }}>
               {data.known_for_department}
             </Text>
           </View>

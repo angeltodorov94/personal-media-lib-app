@@ -23,23 +23,24 @@ export function useGetDiscoverMovie(
       const genres = params.genres.map((g) => g.value).join(",");
 
       // Empty/undefined values are left out of the request entirely
-      const { data } = await api.get<MovieListResponse>("discover/movie", {
-        params: {
-          "vote_average.gte": params.minRating || undefined,
-          "vote_average.lte": params.maxRating || undefined,
-          "primary_release_date.gte": params.minYear
-            ? `${params.minYear}-01-01`
-            : undefined,
-          "primary_release_date.lte": params.maxYear
-            ? `${params.maxYear}-12-31`
-            : undefined,
-          with_genres: genres || undefined,
-          with_origin_country: countries || undefined,
-          sort_by: `${sort.sortBy}.${sort.orderBy}`,
-          "vote_count.gte": 100,
-          page: pageParam,
+      const { data } = await api.get<MovieListResponse>(
+        `discover/${type === "tv" ? "tv" : "movie"}`,
+        {
+          params: {
+            "vote_average.gte": params.minRating || undefined,
+            "vote_average.lte": params.maxRating || undefined,
+            [`${type === "tv" ? "first_air_date" : "primary_release_date"}.gte`]:
+              params.minYear ? `${params.minYear}-01-01` : undefined,
+            [`${type === "tv" ? "first_air_date" : "primary_release_date"}.lte`]:
+              params.maxYear ? `${params.maxYear}-12-31` : undefined,
+            with_genres: genres || undefined,
+            with_origin_country: countries || undefined,
+            sort_by: `${type === "tv" && sort.sortBy === "primary_release_date" ? "first_air_date" : sort.sortBy}.${sort.orderBy}`,
+            "vote_count.gte": 100,
+            page: pageParam,
+          },
         },
-      });
+      );
 
       return data;
     },
@@ -52,6 +53,5 @@ export function useGetDiscoverMovie(
     // Optional tuning:
     // staleTime: 0,
     // maxPages: 5, // cap how many pages are kept in memory
-    enabled: type === "movies",
   });
 }

@@ -203,8 +203,7 @@ const FilterSheet = ({ type }: Props) => {
                 variant="default"
                 size="sm"
                 disabled={
-                  JSON.stringify(filterState) ===
-                  JSON.stringify(initFilterState)
+                  JSON.stringify(filterState) === JSON.stringify(filterStore)
                 }
                 style={{ flex: 1 }}
                 textStyle={{ fontSize: 16 }}

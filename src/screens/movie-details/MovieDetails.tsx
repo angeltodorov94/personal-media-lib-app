@@ -60,7 +60,7 @@ export default function MovieDetails() {
                 {data.original_title}
               </Text>
             )}
-            <Text variant="caption" style={{ fontWeight: 500 }}>
+            <Text variant="caption" style={{ fontWeight: 500, fontSize: 16 }}>
               {new Date(data.release_date).getFullYear()}
             </Text>
           </View>

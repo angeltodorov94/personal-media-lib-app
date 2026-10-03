@@ -10,13 +10,12 @@ import OverviewSection from "@/components/details-screen-components/overview-sec
 import RecommendationsTitles from "@/components/details-screen-components/recommendations-titles/RecommendationsTitles";
 import SimilarTitles from "@/components/details-screen-components/similar-titles/SimilarTitles";
 import RatingModal from "@/components/rating-modal/RatingModal";
-import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { useGetTvShowFullDetails } from "@/hooks/api/tv-show/useGetTvShowFullDetails";
 import { getFlagEmoji } from "@/lib/getFlagEmoji";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { Dot, Star, StarPlus } from "lucide-react-native";
+import { Star, StarPlus } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 
 function TVShowDetails() {
@@ -57,7 +56,7 @@ function TVShowDetails() {
 
     return `${startYear} - ${lastYear}`;
   };
-
+  console.log(data.origin_country);
   return (
     <PageWrapper>
       <MainSection
@@ -65,31 +64,43 @@ function TVShowDetails() {
         vote_average={data.vote_average}
         account_states={data.account_states}
       >
-        <Text variant="subtitle">{data.name}</Text>
-        {data.name !== data.original_name && (
-          <Text variant="caption" style={{ fontSize: 16 }}>
-            {data.original_name}
-          </Text>
-        )}
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ fontSize: 16 }}>{dateSpanText()}</Text>
-          <Icon name={Dot} />
-          <Text className="text-2xl">
-            {data.origin_country.map((f) => getFlagEmoji(f))}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ fontSize: 16 }}>S {data.number_of_seasons}</Text>
-          <Icon name={Dot} />
-          <Text style={{ fontSize: 16 }}>E {data.number_of_episodes}</Text>
-          {data.last_episode_to_air && (
-            <>
-              <Icon name={Dot} />
-              <Text style={{ fontSize: 16 }}>
-                {data.last_episode_to_air?.runtime} min
+        <View style={{ flex: 1, gap: 10 }}>
+          <View>
+            <Text variant="subtitle">{data.name}</Text>
+            {data.name !== data.original_name && (
+              <Text variant="caption" style={{ fontSize: 16 }}>
+                {data.original_name}
               </Text>
-            </>
-          )}
+            )}
+            <Text variant="caption" style={{ fontWeight: 500, fontSize: 16 }}>
+              {dateSpanText()}
+            </Text>
+          </View>
+          <View>
+            {data.episode_run_time.length > 0 && (
+              <Text style={{ fontSize: 16 }}>
+                Runtime: ~
+                {data.episode_run_time.reduce((acc, curr) => acc + curr, 0) /
+                  data.episode_run_time.length}{" "}
+                min
+              </Text>
+            )}
+            <Text className="text-2xl" style={{ fontSize: 16 }}>
+              Country of Origin:{" "}
+              {data.origin_country.map((f) => getFlagEmoji(f))}
+            </Text>
+            <Text style={{ fontSize: 16 }}>
+              Seasons: {data.number_of_seasons}
+            </Text>
+            <Text style={{ fontSize: 16 }}>
+              Episodes: {data.number_of_episodes}
+            </Text>
+            {data.last_episode_to_air && (
+              <Text style={{ fontSize: 16 }}>
+                Runtime: ~{data.last_episode_to_air.runtime} min
+              </Text>
+            )}
+          </View>
         </View>
       </MainSection>
       <GenresSection genres={data.genres} />
