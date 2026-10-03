@@ -1,23 +1,32 @@
 import HorizontalScroll from "@/components/layouts/horizontal-scroll/HorizontalScroll";
+import RipplePressable from "@/components/ripple-pressable/RipplePressable";
 import { Collapsible } from "@/components/ui/collapsible";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import {
   AggregateCastMember,
+  AggregateCrewMember,
   CastMember,
   CrewMember,
 } from "@/types/person";
 import { CreatedBy } from "@/types/tv";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { TouchableOpacity } from "react-native";
 
 type Props = {
-  data: CastMember[] | CrewMember[] | AggregateCastMember[] | CreatedBy[];
+  data:
+    | CastMember[]
+    | CrewMember[]
+    | AggregateCastMember[]
+    | AggregateCrewMember[]
+    | CreatedBy[];
   title: string;
+  isCrew?: boolean;
 };
 
-const CastSection = ({ data, title }: Props) => {
+const CastSection = ({ data, title, isCrew }: Props) => {
+  if (data.length === 0) return null;
+
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -30,9 +39,13 @@ const CastSection = ({ data, title }: Props) => {
             ? item.job
             : "roles" in item
               ? item.roles.map((r) => r.character).join(" / ")
-              : item.name;
+              : "jobs" in item
+                ? item.jobs.map((j) => j.job).join(" / ")
+                : item.name;
       const episodes =
-        "total_episode_count" in item ? item.total_episode_count : null;
+        !isCrew && "total_episode_count" in item
+          ? item.total_episode_count
+          : null;
 
       return (
         <Component
@@ -74,7 +87,7 @@ const Component = ({
   episodes: number | null;
   onPress: () => void;
 }) => (
-  <TouchableOpacity style={{ width: 128 }} onPress={onPress}>
+  <RipplePressable style={{ width: 128 }} onPress={onPress}>
     <Image
       source={{
         uri: `https://image.tmdb.org/t/p/h632${img}`,
@@ -98,5 +111,5 @@ const Component = ({
     <Text variant="caption" style={{ fontSize: 14, textAlign: "center" }}>
       {episodes}
     </Text>
-  </TouchableOpacity>
+  </RipplePressable>
 );

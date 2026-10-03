@@ -1,7 +1,10 @@
 import { useToast } from "@/components/ui/toast";
 import { api } from "@/lib/axios";
 import { getErrorMessage } from "@/lib/getErrorMessage";
-import { queryKeys } from "@/lib/queryKeys";
+import {
+  invalidateMyRatingsLater,
+  setCachedRating,
+} from "@/lib/setCachedRating";
 import { MutationResponse } from "@/types/common";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -20,14 +23,10 @@ export function useDeleteRating(type: "movie" | "tv", id: number) {
 
   return useMutation({
     mutationFn: () => mutationFn(type, id),
-    onSuccess: (res) => {
-      qC.invalidateQueries({
-        queryKey: queryKeys.myRatings,
-      });
-      qC.invalidateQueries({
-        queryKey: queryKeys.details(type, id),
-      });
-
+    onSuccess: async (res) => {
+      // Awaited so the modal only closes once the cache reflects the removal
+      await setCachedRating(qC, type, id, false);
+      invalidateMyRatingsLater(qC, type);
       success("Success!", res.status_message);
     },
     onError: (err) => {

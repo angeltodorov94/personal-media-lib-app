@@ -1,7 +1,10 @@
 import { useToast } from "@/components/ui/toast";
 import { api } from "@/lib/axios";
 import { getErrorMessage } from "@/lib/getErrorMessage";
-import { queryKeys } from "@/lib/queryKeys";
+import {
+  invalidateMyRatingsLater,
+  setCachedRating,
+} from "@/lib/setCachedRating";
 import { MutationResponse } from "@/types/common";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -23,14 +26,10 @@ export function useAddRating(type: "movie" | "tv", id: number) {
 
   return useMutation({
     mutationFn: (rating: number) => mutationFn(type, id, rating),
-    onSuccess: (res) => {
-      qC.invalidateQueries({
-        queryKey: queryKeys.myRatings,
-      });
-      qC.invalidateQueries({
-        queryKey: queryKeys.details(type, id),
-      });
-
+    onSuccess: async (res, rating) => {
+      // Awaited so the modal only closes once the new rating is in the cache
+      await setCachedRating(qC, type, id, { value: rating });
+      invalidateMyRatingsLater(qC, type);
       success("Success!", res.status_message);
     },
     onError: (err) => {

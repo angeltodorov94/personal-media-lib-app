@@ -51,7 +51,7 @@ const MainSection = ({
           paddingBottom: 6,
         }}
       >
-        <View>{children}</View>
+        <View style={{ flex: 1 }}>{children}</View>
         {vote_average && (
           <View style={{ gap: 10 }}>
             <View style={{ gap: 4 }}>

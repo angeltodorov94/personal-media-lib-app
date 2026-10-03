@@ -17,18 +17,15 @@ import {
   StarX,
 } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
+import RipplePressable from "../ripple-pressable/RipplePressable";
 
 const TOTAL_STARS = 10;
 const GOLD = "#f5c518";
 
 type Props = {
   isVisible: boolean;
-  item:
-    | RatedMedia
-    | MovieDetailsWithExtras
-    | TVSeriesDetailsWithExtras
-    | null;
+  item: RatedMedia | MovieDetailsWithExtras | TVSeriesDetailsWithExtras | null;
   onClose: () => void;
 };
 
@@ -112,7 +109,7 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
       const isHalf = !isFull && rating >= starValue - 0.5;
 
       return (
-        <TouchableOpacity
+        <RipplePressable
           key={i}
           hitSlop={6}
           disabled={isPendingDelete}
@@ -130,7 +127,7 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
               </View>
             )}
           </View>
-        </TouchableOpacity>
+        </RipplePressable>
       );
     });
   };
@@ -165,21 +162,23 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
 
             onClose();
           }}
-          disabled={isPendingDelete}
+          disabled={isPendingDelete || isPendingAdd}
         >
           <Icon name={StarX} color={iconColor} />
         </Button>
-        <Button
-          size="sm"
-          variant="outline"
-          style={{ flex: 1 }}
-          onPress={() => mutateDelete()}
-          loading={isPendingDelete}
-          loadingVariant="circle"
-          disabled={isPendingAdd}
-        >
-          <Icon name={StarMinus} color={removeColor} />
-        </Button>
+        {!!originalRating() && (
+          <Button
+            size="sm"
+            variant="outline"
+            style={{ flex: 1 }}
+            onPress={() => mutateDelete()}
+            loading={isPendingDelete}
+            loadingVariant="circle"
+            disabled={isPendingAdd}
+          >
+            <Icon name={StarMinus} color={removeColor} />
+          </Button>
+        )}
         <Button
           size="sm"
           variant="outline"
@@ -187,7 +186,7 @@ const RatingModal = ({ item, isVisible, onClose }: Props) => {
           onPress={() => mutateAdd(rating)}
           loading={isPendingAdd}
           loadingVariant="circle"
-          disabled={isPendingDelete}
+          disabled={isPendingDelete || rating === originalRating()}
         >
           <Icon name={StarPlus} color={addColor} />
         </Button>

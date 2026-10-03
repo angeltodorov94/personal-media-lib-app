@@ -10,13 +10,12 @@ import OverviewSection from "@/components/details-screen-components/overview-sec
 import RecommendationsTitles from "@/components/details-screen-components/recommendations-titles/RecommendationsTitles";
 import SimilarTitles from "@/components/details-screen-components/similar-titles/SimilarTitles";
 import RatingModal from "@/components/rating-modal/RatingModal";
-import { Icon } from "@/components/ui/icon";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { useGetMovieFullDetails } from "@/hooks/api/movie/useGetMovieFullDetails";
 import { getFlagEmoji } from "@/lib/getFlagEmoji";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { Dot, Star, StarPlus } from "lucide-react-native";
+import { Star, StarPlus } from "lucide-react-native";
 import { useLayoutEffect, useState } from "react";
 
 export default function MovieDetails() {
@@ -45,7 +44,7 @@ export default function MovieDetails() {
   if (isError || !data) {
     return <Error />;
   }
-
+  console.log(data.belongs_to_collection);
   return (
     <DetailsPageWrapper>
       <MainSection
@@ -53,22 +52,25 @@ export default function MovieDetails() {
         vote_average={data.vote_average}
         account_states={data.account_states}
       >
-        <Text variant="subtitle">{data.title}</Text>
-        {data.title !== data.original_title && (
-          <Text variant="caption" style={{ fontSize: 16 }}>
-            {data.original_title}
-          </Text>
-        )}
-        <View style={{ flexDirection: "row" }}>
-          <Text style={{ fontSize: 16 }}>
-            {new Date(data.release_date).getFullYear()}
-          </Text>
-          <Icon name={Dot} />
-          <Text style={{ fontSize: 16 }}>{data.runtime} min</Text>
-          <Icon name={Dot} />
-          <Text className="text-2xl">
-            {data.origin_country.map((f) => getFlagEmoji(f))}
-          </Text>
+        <View style={{ flex: 1, gap: 10 }}>
+          <View>
+            <Text variant="subtitle">{data.title}</Text>
+            {data.title !== data.original_title && (
+              <Text variant="caption" style={{ fontSize: 16 }}>
+                {data.original_title}
+              </Text>
+            )}
+            <Text variant="caption" style={{ fontWeight: 500 }}>
+              {new Date(data.release_date).getFullYear()}
+            </Text>
+          </View>
+          <View>
+            <Text style={{ fontSize: 16 }}>Runtime: {data.runtime} min</Text>
+            <Text className="text-2xl" style={{ fontSize: 16 }}>
+              Country of Origin:{" "}
+              {data.origin_country.map((f) => getFlagEmoji(f))}
+            </Text>
+          </View>
         </View>
       </MainSection>
       <GenresSection genres={data.genres} />

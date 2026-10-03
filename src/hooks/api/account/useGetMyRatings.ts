@@ -1,6 +1,5 @@
 import { api } from "@/lib/axios";
 import { ACCOUNT_ID } from "@/lib/constants";
-import { queryKeys } from "@/lib/queryKeys";
 import { MediaType, SortType } from "@/types/common";
 import { RatedMediaResponse } from "@/types/rating";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
@@ -31,7 +30,7 @@ export function useGetMyRatings(mediaType: MediaType, sort: SortType) {
     unknown[],
     number
   >({
-    queryKey: [...queryKeys.myRatings, mediaType, sort],
+    queryKey: ["my-ratings", mediaType, sort],
     queryFn: ({ pageParam }) => queryFn(mediaType, sort, pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {

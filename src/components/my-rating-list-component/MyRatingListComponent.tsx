@@ -4,8 +4,9 @@ import { View } from "@/components/ui/view";
 import { getBarColor } from "@/lib/getBarColor";
 import { MovieSummary, RatedMovie, TrendingMovie } from "@/types/movie";
 import { RatedTVShow, TrendingTVShow, TVSummary } from "@/types/tv";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import { ProgressRingChart } from "../charts/progress-ring-chart";
+import RipplePressable from "../ripple-pressable/RipplePressable";
 
 type Props = {
   item:
@@ -39,7 +40,7 @@ const MyRatingListComponent = ({
         : null;
 
   return (
-    <TouchableOpacity style={s.container} onPress={onItemPress}>
+    <RipplePressable style={s.container} onPress={onItemPress}>
       <Image
         source={{
           uri: `https://image.tmdb.org/t/p/w154${item.poster_path}`,
@@ -64,7 +65,7 @@ const MyRatingListComponent = ({
         </Text>
       </View>
       {rating && (
-        <TouchableOpacity onPress={onRatingPress} hitSlop={20}>
+        <RipplePressable onPress={onRatingPress} hitSlop={20}>
           <ProgressRingChart
             progress={rating * 10}
             size={50}
@@ -78,9 +79,9 @@ const MyRatingListComponent = ({
               screen === "discover" ? "info" : getBarColor(rating * 10)
             }
           />
-        </TouchableOpacity>
+        </RipplePressable>
       )}
-    </TouchableOpacity>
+    </RipplePressable>
   );
 };
 

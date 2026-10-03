@@ -1,10 +1,10 @@
+import RipplePressable from "@/components/ripple-pressable/RipplePressable";
 import { Image } from "@/components/ui/image";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
 import { MultiSearchResult } from "@/types/search";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
 
 type Props = {
   item: MultiSearchResult;
@@ -60,7 +60,7 @@ const SearchItem = ({ item, onClick }: Props) => {
   }, []);
 
   return (
-    <TouchableOpacity
+    <RipplePressable
       style={{
         paddingVertical: 8,
         paddingHorizontal: 4,
@@ -96,7 +96,7 @@ const SearchItem = ({ item, onClick }: Props) => {
           </Text>
         )}
       </View>
-    </TouchableOpacity>
+    </RipplePressable>
   );
 };
 

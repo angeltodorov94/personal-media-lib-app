@@ -50,7 +50,7 @@ export function useGetDiscoverMovie(
         : undefined;
     },
     // Optional tuning:
-    staleTime: 0,
+    // staleTime: 0,
     // maxPages: 5, // cap how many pages are kept in memory
     enabled: type === "movies",
   });

@@ -18,8 +18,12 @@ export default function TabLayout() {
         name="(home)"
         options={{
           title: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+          tabBarIcon: ({ color, size, focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
@@ -43,6 +47,19 @@ export default function TabLayout() {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons
               name={focused ? "star" : "star-outline"}
+              size={size}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="(owned-media)"
+        options={{
+          title: "My Library",
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "disc-sharp" : "disc-outline"}
               size={size}
               color={color}
             />

@@ -32,6 +32,7 @@ function TVShowDetails() {
     navigation.setOptions({
       rightButton: {
         icon: data.account_states.rated ? Star : StarPlus,
+        type: data.account_states.rated ? "primary" : "secondary",
         onPress: () => setIsRatingModalOpen(true),
       },
     });
@@ -95,6 +96,7 @@ function TVShowDetails() {
       <OverviewSection overview={data.overview} />
       <KeywordsSection data={data.keywords.results} />
       <CastSection title="Created By" data={data.created_by} />
+      <CastSection isCrew title="Crew" data={data.aggregate_credits.crew} />
       <CastSection title="Cast" data={data.aggregate_credits.cast} />
       <RecommendationsTitles id={id} type="tv" />
       <SimilarTitles id={id} type="tv" />

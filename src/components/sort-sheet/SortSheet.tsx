@@ -89,7 +89,7 @@ const SortSheet = ({ type }: Props) => {
               variant="default"
               size="sm"
               disabled={
-                JSON.stringify(sortState) === JSON.stringify(initSortingState)
+                JSON.stringify(sortState) === JSON.stringify(sortingStore)
               }
               style={{ flex: 1 }}
               textStyle={{ fontSize: 16 }}

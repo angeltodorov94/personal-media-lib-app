@@ -1,10 +1,10 @@
 import { api } from "@/lib/axios";
 import { SESSION_TOKEN } from "@/lib/constants";
-import { queryKeys } from "@/lib/queryKeys";
+import { mergeDuplicatePeople } from "@/lib/mergeDuplicatePeople";
 import { MovieDetailsWithExtras } from "@/types/movie";
 import { useQuery } from "@tanstack/react-query";
 
-const jobs = [
+export const CREW_JOBS = [
   "Director",
   "Screenplay",
   "Writer",
@@ -17,8 +17,11 @@ const select = (data: MovieDetailsWithExtras): MovieDetailsWithExtras => ({
   ...data,
   credits: {
     ...data.credits,
-    crew: data.credits.crew.filter(
-      (c) => jobs.includes(c.job) && c.popularity >= 1 && c.profile_path,
+    crew: mergeDuplicatePeople(
+      data.credits.crew.filter(
+        (c) => CREW_JOBS.includes(c.job) && c.popularity >= 1 && c.profile_path,
+      ),
+      "job",
     ),
     cast: data.credits.cast.filter(
       (c) => c.profile_path && !c.character.includes("uncredited"),
@@ -39,7 +42,7 @@ async function queryFn(id: string): Promise<MovieDetailsWithExtras> {
 
 export function useGetMovieFullDetails(id: string) {
   return useQuery({
-    queryKey: queryKeys.movieDetails(id),
+    queryKey: ["movie-details", id],
     queryFn: () => queryFn(id),
     select,
   });

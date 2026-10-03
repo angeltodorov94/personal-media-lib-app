@@ -2,10 +2,7 @@ import { api } from "@/lib/axios";
 import { SearchMultiResponse } from "@/types/search";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-async function queryFn(
-  search: string,
-  page = 1,
-): Promise<SearchMultiResponse> {
+async function queryFn(search: string, page = 1): Promise<SearchMultiResponse> {
   const { data } = await api.get<SearchMultiResponse>("search/multi", {
     params: {
       query: search,
@@ -29,7 +26,7 @@ export function useGetMultiSearch(search: string) {
         : undefined;
     },
     // Optional tuning:
-    staleTime: 0,
+    // staleTime: 0,
     // maxPages: 5, // cap how many pages are kept in memory
     enabled: search.trim().length > 0,
   });
