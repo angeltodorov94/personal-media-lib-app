@@ -37,7 +37,7 @@ import {
   ComboboxTrigger,
   ComboboxValue,
 } from "../ui/combobox";
-import { GroupedInput, GroupedInputItem } from "../ui/input";
+import { GroupedInput, GroupedInputItem, Input } from "../ui/input";
 
 type Props = {
   type: "discover" | "ratings";
@@ -149,7 +149,6 @@ const FilterSheet = ({ type }: Props) => {
                     setFilterState((s) => ({ ...s, minRating }))
                   }
                   keyboardType="number-pad"
-                  maxLength={2}
                 />
                 <GroupedInputItem
                   label="Max Rating"
@@ -159,7 +158,6 @@ const FilterSheet = ({ type }: Props) => {
                     setFilterState((s) => ({ ...s, maxRating }))
                   }
                   keyboardType="number-pad"
-                  maxLength={2}
                 />
               </GroupedInput>
               <GroupedInput>
@@ -182,6 +180,9 @@ const FilterSheet = ({ type }: Props) => {
                   keyboardType="number-pad"
                 />
               </GroupedInput>
+              {filterState.keyword && (
+                <Input value={filterState.keyword.label} disabled />
+              )}
             </>
           )}
           {type === "discover" && (

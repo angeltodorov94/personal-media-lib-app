@@ -9,6 +9,7 @@ export type FiltersType = {
   maxYear: string | undefined;
   countries: OptionType[];
   genres: OptionType[];
+  keyword: OptionType | null;
 };
 
 export const initFilterState: FiltersType = {
@@ -18,6 +19,7 @@ export const initFilterState: FiltersType = {
   maxYear: "",
   countries: [],
   genres: [],
+  keyword: null,
 };
 
 interface MyRatingsFiltersState {
@@ -96,6 +98,18 @@ export const setFilters = (
       });
       break;
   }
+};
+
+/** Resets every Discover filter, then applies only the given ones for the given media type. */
+export const applyDiscoverFilter = (
+  media: MediaType,
+  filter: Partial<FiltersType>,
+) => {
+  useFiltersStore.setState({
+    discoverScreenMediaType: media,
+    discoverScreenFilters: { ...initFilterState, ...filter },
+    isDiscoverFilterPanelOpen: false,
+  });
 };
 
 export const clearFilters = (type: "discover" | "ratings") => {

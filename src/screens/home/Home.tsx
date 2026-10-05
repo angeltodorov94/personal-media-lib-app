@@ -42,53 +42,56 @@ export default function HomeScreen() {
   }
 
   return (
-    <ScrollViewPageLayout style={{ marginTop: 10 }}>
-      {moviesQ.data && (
-        <View>
-          <Text variant="heading" style={{ marginLeft: 10 }}>
-            Popular Movies
-          </Text>
-          <HorizontalScroll>
-            {moviesQ.data.results.map((item) => (
-              <VerticalMediaCard
-                key={item.id}
-                item={item}
-                onPress={() =>
-                  router.push({
-                    pathname: "/movie/[id]",
-                    params: { id: item.id },
-                  })
-                }
-              />
-            ))}
-          </HorizontalScroll>
-        </View>
-      )}
-      {showsQ.data && (
-        <View>
-          <Text variant="heading" style={{ marginLeft: 10 }}>
-            Popular TV Shows
-          </Text>
-          <HorizontalScroll>
-            {showsQ.data.results.map((item) => (
-              <VerticalMediaCard
-                key={item.id}
-                item={item}
-                onPress={() =>
-                  router.push({
-                    pathname: "/tv/[id]",
-                    params: { id: item.id },
-                  })
-                }
-              />
-            ))}
-          </HorizontalScroll>
-        </View>
-      )}
+    <>
+      <ScrollViewPageLayout style={{ marginTop: 10 }}>
+        {moviesQ.data && (
+          <View>
+            <Text variant="heading" style={{ marginLeft: 10 }}>
+              Popular Movies
+            </Text>
+            <HorizontalScroll>
+              {moviesQ.data.results.map((item) => (
+                <VerticalMediaCard
+                  key={item.id}
+                  item={item}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/movie/[id]",
+                      params: { id: item.id },
+                    })
+                  }
+                />
+              ))}
+            </HorizontalScroll>
+          </View>
+        )}
+        {showsQ.data && (
+          <View>
+            <Text variant="heading" style={{ marginLeft: 10 }}>
+              Popular TV Shows
+            </Text>
+            <HorizontalScroll>
+              {showsQ.data.results.map((item) => (
+                <VerticalMediaCard
+                  key={item.id}
+                  item={item}
+                  onPress={() =>
+                    router.push({
+                      pathname: "/tv/[id]",
+                      params: { id: item.id },
+                    })
+                  }
+                />
+              ))}
+            </HorizontalScroll>
+          </View>
+        )}
+      </ScrollViewPageLayout>
+      {/* Outside the ScrollView: Modal touches bubble through the React tree, so the outer ScrollView would swallow the first tap to dismiss the keyboard. */}
       <SearchComponent
         isVisible={isSearchVisible}
         onClose={() => setIsSearchVisible(false)}
       />
-    </ScrollViewPageLayout>
+    </>
   );
 }

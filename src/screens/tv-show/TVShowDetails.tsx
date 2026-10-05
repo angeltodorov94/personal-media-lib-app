@@ -103,9 +103,9 @@ function TVShowDetails() {
           </View>
         </View>
       </MainSection>
-      <GenresSection genres={data.genres} />
+      <GenresSection genres={data.genres} type="tv" />
       <OverviewSection overview={data.overview} />
-      <KeywordsSection data={data.keywords.results} />
+      <KeywordsSection data={data.keywords.results} type="tv" />
       <CastSection
         type="created_by"
         title="Created By"

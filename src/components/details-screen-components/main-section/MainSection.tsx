@@ -52,7 +52,7 @@ const MainSection = ({
         }}
       >
         <View style={{ flex: 1 }}>{children}</View>
-        {vote_average && (
+        {!!vote_average && (
           <View style={{ gap: 10 }}>
             <View style={{ gap: 4 }}>
               <View

@@ -73,9 +73,9 @@ export default function MovieDetails() {
           </View>
         </View>
       </MainSection>
-      <GenresSection genres={data.genres} />
+      <GenresSection genres={data.genres} type="movie" />
       <OverviewSection overview={data.overview} />
-      <KeywordsSection data={data.keywords.keywords} />
+      <KeywordsSection data={data.keywords.keywords} type="movie" />
       <CastSection type="crew" title="Crew" data={data.credits.crew} />
       <CastSection type="cast" title="Cast" data={data.credits.cast} />
       <RecommendationsTitles id={id} type="movie" />

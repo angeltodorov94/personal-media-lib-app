@@ -5,7 +5,7 @@ import FilterSheet from "@/components/filter-sheet/FilterSheet";
 import MyRatingListComponent from "@/components/my-rating-list-component/MyRatingListComponent";
 import RatingModal from "@/components/rating-modal/RatingModal";
 import SortSheet from "@/components/sort-sheet/SortSheet";
-import { useGetMyRatings } from "@/hooks/api/account/useGetMyRatings";
+import { useGetMyRatings } from "@/hooks/api/rating/useGetMyRatings";
 import { useFlatListHeaderAnimation } from "@/hooks/useFlatListHeaderAnimation";
 import {
   initFilterState,
@@ -64,13 +64,16 @@ export default function RatingsScreen() {
     });
   }, [navigation, isFiltersOn, isSortingOn]);
 
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     label:
-  //       data &&
-  //       `Total ${mediaType === "movies" ? "Movies" : "TV Shows"}: ${ratings.data?.total_results}`,
-  //   });
-  // }, [navigation, ratings.data?.total_results, mediaType]);
+  const totalResults = data?.pages[0]?.total_results;
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      label:
+        totalResults === undefined
+          ? undefined
+          : `Total ${mediaType === "movies" ? "Movies" : "TV Shows"}: ${totalResults}`,
+    });
+  }, [navigation, totalResults, mediaType]);
 
   return (
     <>
@@ -84,7 +87,6 @@ export default function RatingsScreen() {
         }
         ref={ref}
         data={movies}
-        extraData={movies}
         onScroll={onScroll}
         scrollEventThrottle={16}
         onEndReached={() => {

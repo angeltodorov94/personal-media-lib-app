@@ -34,6 +34,7 @@ export function useGetDiscoverMovie(
             [`${type === "tv" ? "first_air_date" : "primary_release_date"}.lte`]:
               params.maxYear ? `${params.maxYear}-12-31` : undefined,
             with_genres: genres || undefined,
+            with_keywords: params.keyword?.value,
             with_origin_country: countries || undefined,
             sort_by: `${type === "tv" && sort.sortBy === "primary_release_date" ? "first_air_date" : sort.sortBy}.${sort.orderBy}`,
             "vote_count.gte": 100,
