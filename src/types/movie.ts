@@ -5,7 +5,6 @@
  *  - GET /movie/{movie_id}                  -> MovieDetails
  *  - GET /movie/{movie_id}/credits          -> MovieCredits
  *  - GET /movie/{movie_id}/keywords         -> MovieKeywords
- *  - GET /movie/{movie_id}/similar          -> MovieListResponse
  *  - GET /movie/{movie_id}/recommendations  -> MovieListResponse
  *  - GET /discover/movie                    -> MovieListResponse
  *  - GET /account/{account_id}/rated/movies -> RatedMoviesResponse
@@ -121,7 +120,7 @@ export type MovieDetailsWithExtras = MovieDetails & {
 /*  List responses                                                            */
 /* -------------------------------------------------------------------------- */
 
-/** /similar, /recommendations and /discover all share this shape. */
+/** /recommendations and /discover all share this shape. */
 export type MovieListResponse = PaginatedResponse<MovieSummary>;
 
 export type RatedMovie = MovieSummary & { rating: number };

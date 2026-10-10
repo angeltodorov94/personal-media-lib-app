@@ -8,7 +8,6 @@ import KeywordsSection from "@/components/details-screen-components/keywords-sec
 import MainSection from "@/components/details-screen-components/main-section/MainSection";
 import OverviewSection from "@/components/details-screen-components/overview-section/OverviewSection";
 import RecommendationsTitles from "@/components/details-screen-components/recommendations-titles/RecommendationsTitles";
-import SimilarTitles from "@/components/details-screen-components/similar-titles/SimilarTitles";
 import RatingModal from "@/components/rating-modal/RatingModal";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
@@ -79,7 +78,6 @@ export default function MovieDetails() {
       <CastSection type="crew" title="Crew" data={data.credits.crew} />
       <CastSection type="cast" title="Cast" data={data.credits.cast} />
       <RecommendationsTitles id={id} type="movie" />
-      <SimilarTitles id={id} type="movie" />
       <ExtraSection
         imdb={data.imdb_id}
         collectionID={data.belongs_to_collection?.id}

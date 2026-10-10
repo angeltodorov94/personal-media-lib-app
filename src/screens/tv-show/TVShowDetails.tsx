@@ -8,7 +8,6 @@ import KeywordsSection from "@/components/details-screen-components/keywords-sec
 import MainSection from "@/components/details-screen-components/main-section/MainSection";
 import OverviewSection from "@/components/details-screen-components/overview-section/OverviewSection";
 import RecommendationsTitles from "@/components/details-screen-components/recommendations-titles/RecommendationsTitles";
-import SimilarTitles from "@/components/details-screen-components/similar-titles/SimilarTitles";
 import RatingModal from "@/components/rating-modal/RatingModal";
 import { Text } from "@/components/ui/text";
 import { View } from "@/components/ui/view";
@@ -122,7 +121,6 @@ function TVShowDetails() {
         data={data.aggregate_credits.cast}
       />
       <RecommendationsTitles id={id} type="tv" />
-      <SimilarTitles id={id} type="tv" />
       <ExtraSection imdb={data.external_ids.imdb_id} />
       <RatingModal
         item={data}

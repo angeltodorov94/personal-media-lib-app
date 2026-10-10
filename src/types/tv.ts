@@ -6,7 +6,6 @@
  *  - GET /tv/{series_id}/aggregate_credits  -> TVAggregateCredits
  *  - GET /tv/{series_id}/external_ids       -> TVSeriesExternalIds
  *  - GET /tv/{series_id}/keywords           -> TVKeywords
- *  - GET /tv/{series_id}/similar            -> TVListResponse
  *  - GET /tv/{series_id}/recommendations    -> TVListResponse
  *  - GET /discover/tv                       -> TVListResponse
  *  - GET /account/{account_id}/rated/tv     -> RatedTVShowsResponse
@@ -25,11 +24,7 @@ import {
   ProductionCountry,
   SpokenLanguage,
 } from "./common";
-import {
-  AggregateCastMember,
-  AggregateCrewMember,
-  Gender,
-} from "./person";
+import { AggregateCastMember, AggregateCrewMember, Gender } from "./person";
 
 /* -------------------------------------------------------------------------- */
 /*  Building blocks                                                           */
@@ -190,7 +185,7 @@ export type TVSeriesDetailsWithExtras = TVSeriesDetails & {
 /*  List responses                                                            */
 /* -------------------------------------------------------------------------- */
 
-/** /similar, /recommendations and /discover all share this shape. */
+/**, /recommendations and /discover all share this shape. */
 export type TVListResponse = PaginatedResponse<TVSummary>;
 
 export type RatedTVShow = TVSummary & { rating: number };

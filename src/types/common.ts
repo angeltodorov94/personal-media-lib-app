@@ -20,7 +20,7 @@ export type MutationResponse = {
 /*  Generic response wrappers                                                 */
 /* -------------------------------------------------------------------------- */
 
-/** Paginated wrapper used by /similar, /recommendations, /search, /discover, etc. */
+/** Paginated wrapper used by /recommendations, /search, /discover, etc. */
 export type PaginatedResponse<T> = {
   page: number;
   results: T[];
@@ -72,7 +72,7 @@ export type Country = {
 
 /**
  * Fields shared by the condensed movie and TV shapes returned in
- * list-style endpoints (similar, recommendations, search, discover, etc).
+ * list-style endpoints (recommendations, search, discover, etc).
  */
 export type MediaSummaryBase = {
   adult: boolean;
